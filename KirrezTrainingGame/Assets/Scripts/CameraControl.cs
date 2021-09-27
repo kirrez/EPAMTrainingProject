@@ -7,18 +7,13 @@ public class CameraControl : MonoBehaviour
     public Transform myCamera;
     public Transform targetPlayer; // player's tank to follow to
 
-    private float smooth = 5f;
+    private float _smooth = 5f;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
+    private void Update()
     {
         if (transform.position != targetPlayer.position)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPlayer.position, Time.deltaTime * smooth);
+            transform.position = Vector3.Lerp(transform.position, targetPlayer.position, Time.deltaTime * _smooth);
         }
     }
 }
