@@ -9,84 +9,107 @@ public class Weapon : MonoBehaviour
     public float bulletSpeed = 20f;
     public float lifetime = 2f;
     public float bulletDamage = 20f;
+    public int bulletAmount = 3;
+    public int maxClipSize = 10;
+    public int shotsInClip = 10;
 
-    private float _currentCooldown = 0f; // when shooting it gets value of "shootingCooldown", and then delta time is subtracting
-    private GameObject[] _bullets = new GameObject[3];
-    private int[] _bulletStatus = new int[3];  // 0 - ready for shooting, 1 - flying
-    private int _bulletIndex = 0;
+    public float CurrentCooldown { get; set; }
+    public int BulletIndex { get; set; }
+    public int CurrentClipSize { get; set; }
+    public int ShotsLeft { get; set; }
+    public int[] BulletStatus { get; set; }
+    public GameObject[] Bullets { get; set; }
 
-    // prefab reference
-    private GameObject bullet;
-
-    public Text outText;
-    public Text outText1;
+    // prefab references for bullets, blasts etc.
+    public GameObject bulletPrefab;
 
     private void Awake()
     {
-        bullet = Resources.Load("Prefabs/Shell") as GameObject;
-        if (bullet == null) Debug.Log("Loading failed");
-        for (int i = 0; i < _bullets.Length; i++)
+        Bullets = new GameObject[bulletAmount];
+        BulletStatus = new int[bulletAmount];
+
+        CurrentClipSize = maxClipSize;
+        ShotsLeft = shotsInClip;
+
+        if (bulletPrefab != null)
         {
-            _bullets[i] = Instantiate(bullet);
-            SetupBulletProperties(_bullets[i]);
-            _bullets[i].SetActive(false);
-            _bulletStatus[i] = 0;
+            for (int i = 0; i < Bullets.Length; i++)
+            {
+                Bullets[i] = Instantiate(bulletPrefab);
+                Bullets[i].transform.SetParent(gameObject.transform);
+                SetupBulletProperties(Bullets[i]);
+                Bullets[i].SetActive(false);
+                BulletStatus[i] = 0;
+            }
+        }
+        else
+        {
+            Debug.Log("Bullet Prefab Loading failed!");
         }
     }
 
     private void FixedUpdate()
     {
-        // checking shot's cooldown
-        if (_currentCooldown > 0)
+        if (CurrentCooldown > 0)
         {
-            _currentCooldown -= Time.fixedDeltaTime;
-            outText.text = _currentCooldown.ToString("0.00");
+            CurrentCooldown -= Time.fixedDeltaTime;
         }
-        for (int i = 0; i < _bullets.Length; i++)
+        for (int i = 0; i < Bullets.Length; i++)
         {
-            if (_bullets[i].GetComponent<Bullet>().flightFinished == true)
+            if (Bullets[i].GetComponent<Bullet>().FlightFinished == true)
             {
-                _bulletStatus[i] = 0; // set status to "ready for shooting"
-                _bullets[i].SetActive(false);
-                outText1.text = $"BulletStatus : {_bulletStatus[0]} {_bulletStatus[1]} {_bulletStatus[2]}";
+                BulletStatus[i] = 0;
+                Bullets[i].SetActive(false);
+                //outText1.text = $"BulletStatus : {_bulletStatus[0]} {_bulletStatus[1]} {_bulletStatus[2]}";
             }
         }
     }
 
-    public void SetupBulletProperties(GameObject target)
+    public virtual void SetupBulletProperties(GameObject target)
     {
         Bullet targetBullet = target.GetComponent<Bullet>();
-        if (targetBullet == null) Debug.Log("Bullet setup failed! (null)");
+        //if (targetBullet == null) Debug.Log("Bullet setup failed! (null)");
         targetBullet.SetLifetime(lifetime);
         targetBullet.SetBulletDamage(bulletDamage);
     }
 
     public void UpdateIndex()
     {
-        if (_bulletIndex < _bulletStatus.Length - 1)
+        if (BulletIndex < BulletStatus.Length - 1)
         {
-            _bulletIndex++;
+            BulletIndex++;
         }
         else
         {
-            _bulletIndex = 0;
+            BulletIndex = 0;
         }
     }
 
-    public void Shoot(Transform firePoint)
+    public virtual void Shoot(Transform firePoint)
     {
-        if ((_bulletStatus[_bulletIndex] == 0) && (_currentCooldown <= 0))
+        if ((BulletStatus[BulletIndex] == 0) && (CurrentCooldown <= 0))
         {
-            _bulletStatus[_bulletIndex] = 1; // set status to "flying"
-            outText1.text = $"BulletStatus : {_bulletStatus[0]} {_bulletStatus[1]} {_bulletStatus[2]}"; //debug
-            _currentCooldown = shootingCooldown;
-            _bullets[_bulletIndex].SetActive(true);
-            var rBody = _bullets[_bulletIndex].GetComponent<Rigidbody>();
-            rBody.transform.position = firePoint.position;
-            rBody.transform.rotation = firePoint.rotation;
-            rBody.velocity = rBody.transform.forward * bulletSpeed;
-            //Debug.Log($"FIRE!! index {_bulletIndex}");
-            UpdateIndex();
+            if ((ShotsLeft == 0) && (CurrentClipSize == 0)) return;
+            if ((ShotsLeft == 0) && (CurrentClipSize > 0))
+            {
+                // it's an instant reloading ))
+                CurrentClipSize--;
+                ShotsLeft = shotsInClip;
+            }
+            if (ShotsLeft > 0)
+            {
+                BulletStatus[BulletIndex] = 1; // set status to "flying"
+                CurrentCooldown = shootingCooldown;
+                Bullets[BulletIndex].SetActive(true);
+                var rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
+                rBody.transform.position = firePoint.position;
+                rBody.transform.rotation = firePoint.rotation;
+                rBody.velocity = rBody.transform.forward * bulletSpeed;
+                UpdateIndex();
+
+                ShotsLeft--;
+            }
+            //Debug.Log($"Clips : {CurrentClipSize} Shots : {ShotsLeft}");
         }
     }
 }

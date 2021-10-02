@@ -4,29 +4,31 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [HideInInspector]
-    public bool flightFinished = false; // accesible for Weapon class
+    private float _maxLifetime = 3f; // get from Weapon class
+    private float _currentLifetime = 0f;
+    private float _bulletDamage = 1f; // get from Weapon class
+    private int _maxPiercingAmount = 0;
+    private int _piercingAmount = 0;
 
-    private float maxLifetime = 3f; // get from Weapon class
-    private float currentLifetime = 0f;
-    private float bulletDamage = 1f; // get from Weapon class
+    public bool FlightFinished { get; set; }
 
     private void OnEnable()
     {
         //Debug.Log("Bullet enabled!");
-        currentLifetime = maxLifetime;
-        flightFinished = false;
+        _currentLifetime = _maxLifetime;
+        _piercingAmount = _maxPiercingAmount;
+        FlightFinished = false;
     }
 
     private void FixedUpdate()
     {
-        if (currentLifetime > 0)
+        if (_currentLifetime > 0)
         {
-            currentLifetime -= Time.fixedDeltaTime;
+            _currentLifetime -= Time.fixedDeltaTime;
         }
-        if (currentLifetime <= 0)
+        if (_currentLifetime <= 0)
         {
-            flightFinished = true;
+            FlightFinished = true;
         }
     }
 
@@ -36,19 +38,30 @@ public class Bullet : MonoBehaviour
         {
             Enemy target = other.GetComponent<Enemy>();
             Debug.Log("Hit enemy!");
-            target.ReceiveBulletDamage(bulletDamage);
+            target.ReceiveBulletDamage(_bulletDamage);
+            //_piercingAmount--;
+            //// if value goes below zero, it means our weapon doesn't use piercing logic
+            if (_piercingAmount == 0) FlightFinished = true;
+            else _piercingAmount--;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+    }
+
+
 
     public void SetLifetime(float lifetime)
     {
         if (lifetime <= 0)
         {
-            maxLifetime = 0.01f;
+            _maxLifetime = 0.01f;
         }
         else
         {
-            maxLifetime = lifetime;
+            _maxLifetime = lifetime;
         }
     }
 
@@ -56,12 +69,18 @@ public class Bullet : MonoBehaviour
     {
         if (damage <= 1f)
         {
-            bulletDamage = 1f;
+            _bulletDamage = 1f;
         }
         else
         {
-            bulletDamage = damage;
+            _bulletDamage = damage;
         }
-        Debug.Log($"bullet damage is {bulletDamage}");
+        //Debug.Log($"bullet damage is {bulletDamage}");
+    }
+
+    public void SetPiercing(int piercing)
+    {
+        if (piercing < 0) _piercingAmount = 0;
+        else _maxPiercingAmount = piercing;
     }
 }
