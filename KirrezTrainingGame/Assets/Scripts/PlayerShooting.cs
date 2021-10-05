@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public Transform tankBody;
+    public Transform tankTurret;
+
     public Weapon[] WeaponPrefabs = new Weapon[3]; // prefabs
     public Transform firePoint;
     public PlayerHUD playerHUD; // prefab
@@ -12,11 +15,21 @@ public class PlayerShooting : MonoBehaviour
     public int maxHitpoints = 5;
     public int CurrentHitpoints { get; set; }
     public float invulnerabilityPeriod = 1.5f; // time before player can be damaged again
-    
+
+    private bool _tankBlinking = false; // for changing meshes
+    private bool _blinkingEffect = false;
+    private float _currentPeriod = 0f;
+    private float _blinkingDelta = 0.2f;
+    private float _secondTimer = 0;
     private int _weaponIndex = 0;
     private Weapon[] Weapons { get; set; }
     //private PlayerHUD PlayerHUD;
 
+    public GameObject[] tankNormalMesh = new GameObject[4];
+    public GameObject[] tankBlinkingMesh = new GameObject[4];
+
+    public GameObject[] TankNormalMesh { get; set; } = new GameObject[4];
+    public GameObject[] TankBlinkingMesh { get; set; } = new GameObject[4];
 
     private void Awake()
     {
@@ -32,12 +45,33 @@ public class PlayerShooting : MonoBehaviour
         }
         // player always starts with full HP
         CurrentHitpoints = maxHitpoints;
+
+        //Loading Tank parts.. (blinking effect)
+        for (int i = 0; i < tankNormalMesh.Length; i++)
+        {
+            TankNormalMesh[i] = Instantiate(tankNormalMesh[i], transform.position, transform.rotation);
+            TankBlinkingMesh[i] = Instantiate(tankBlinkingMesh[i], transform.position, transform.rotation);
+            if (i < 3)
+            {
+                TankNormalMesh[i].transform.SetParent(tankBody);
+                TankBlinkingMesh[i].transform.SetParent(tankBody);
+            }
+            if (i == 3)
+            {
+                TankNormalMesh[i].transform.SetParent(tankTurret);
+                TankNormalMesh[i].transform.position = tankTurret.transform.position;
+                TankBlinkingMesh[i].transform.SetParent(tankTurret);
+                TankBlinkingMesh[i].transform.position = tankTurret.transform.position;
+            }
+        }
     }
 
     private void Start()
     {
         playerHUD.SetMaxHP(maxHitpoints);
         playerHUD.SetInvulnerabilityPeriod(invulnerabilityPeriod);
+
+        SwitchTankMesh(_tankBlinking);
     }
 
     private void Update()
@@ -55,6 +89,7 @@ public class PlayerShooting : MonoBehaviour
             CurrentHitpoints--;
             playerHUD.UpdateCurrentHP(CurrentHitpoints);
             playerHUD.ActivateInvulnerability();
+            ActivateBlinkingEffect();
         }
 
         if (Input.GetButton("Fire1"))
@@ -63,5 +98,58 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        // blinking effect..
+        if (_tankBlinking)
+        {
+            _currentPeriod -= Time.fixedDeltaTime;
+            if (_currentPeriod <= 0)
+            {
+                _tankBlinking = false;
+                SwitchTankMesh(_tankBlinking); // temporary
+            }
+
+            _secondTimer -= Time.fixedDeltaTime;
+            if (_secondTimer <= 0)
+            {
+                _blinkingEffect = !_blinkingEffect;
+                SwitchTankMesh(_blinkingEffect);
+                _secondTimer = _blinkingDelta;
+            }
+        }
+    }
+
+    public void SwitchTankMesh(bool blinking)
+    {
+        if (blinking)
+        {
+            for (int i = 0; i < TankBlinkingMesh.Length; i++)
+            {
+                TankBlinkingMesh[i].SetActive(true);
+                TankNormalMesh[i].SetActive(false);
+            }
+        }
+        if (!blinking)
+        {
+            for (int i = 0; i < TankBlinkingMesh.Length; i++)
+            {
+                TankBlinkingMesh[i].SetActive(false);
+                TankNormalMesh[i].SetActive(true);
+            }
+        }
+    }
+
+    private void ActivateBlinkingEffect()
+    {
+        if (_tankBlinking == false)
+        {
+            _tankBlinking = true;
+            _blinkingEffect = true;
+            _currentPeriod = invulnerabilityPeriod;
+            SwitchTankMesh(_tankBlinking); // temporary
+            _secondTimer = _blinkingDelta;
+        }
+    }
 
 }

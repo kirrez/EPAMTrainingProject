@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingCooldown: 0.1
   bulletSpeed: 30
-  lifetime: 1.5
+  lifetime: 1.2
   bulletDamage: 10
   bulletAmount: 15
   maxClipSize: 10

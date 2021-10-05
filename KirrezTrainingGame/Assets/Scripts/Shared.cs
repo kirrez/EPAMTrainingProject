@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 // All directions in XZ plane (Z instead of Y)
 public static class Shared
 {

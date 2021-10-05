@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
-    public Image TankNormal;
-    public Image TankDamaged;
+    public Image TankNormalIcon;
+    public Image TankDamagedIcon;
     public Image InvulnerabilityGauge;
     public RectTransform emptyBar; // prefab
     public RectTransform fullBar; // prefab
@@ -27,8 +27,8 @@ public class PlayerHUD : MonoBehaviour
     private void Awake()
     {
         // setting Tank icons into base undamaged state
-        TankNormal.gameObject.SetActive(true);
-        TankDamaged.gameObject.SetActive(false);
+        TankNormalIcon.gameObject.SetActive(true);
+        TankDamagedIcon.gameObject.SetActive(false);
         InvulnerabilityGauge.gameObject.SetActive(true);
         InvulnerabilityGauge.fillAmount = 0f;
     }
@@ -43,7 +43,7 @@ public class PlayerHUD : MonoBehaviour
             if (_currentPeriod <= 0)
             {
                 Invulnerability = false;
-                TankDamaged.gameObject.SetActive(false);
+                TankDamagedIcon.gameObject.SetActive(false);
             }
         }
     }
@@ -54,7 +54,7 @@ public class PlayerHUD : MonoBehaviour
         {
             Invulnerability = true;
             _currentPeriod = _invulnerabilityPeriod;
-            TankDamaged.gameObject.SetActive(true);
+            TankDamagedIcon.gameObject.SetActive(true);
         }
     }
 
