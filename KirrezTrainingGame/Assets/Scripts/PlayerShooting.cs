@@ -10,9 +10,10 @@ public class PlayerShooting : MonoBehaviour
 
     public Weapon[] WeaponPrefabs = new Weapon[3]; // prefabs
     public Transform firePoint;
-    public PlayerHUD playerHUD; // prefab
+    public PlayerHUD playerHUD; // still not prefab, but it sure will
+    public GameUI gameUI; // still not prefab, but it sure will
 
-    public int maxHitpoints = 5;
+    public int maxHitpoints = 3;
     public int CurrentHitpoints { get; set; }
     public float invulnerabilityPeriod = 1.5f; // time before player can be damaged again
 
@@ -44,6 +45,7 @@ public class PlayerShooting : MonoBehaviour
             }
         }
         // player always starts with full HP
+        maxHitpoints = GetComponent<PlayerSettings>().GetMaxHitpoints(); // gameObject with "PlayerShooting" script must also have "PlayerSettings" script on it
         CurrentHitpoints = maxHitpoints;
 
         //Loading Tank parts.. (blinking effect)
@@ -64,6 +66,8 @@ public class PlayerShooting : MonoBehaviour
                 TankBlinkingMesh[i].transform.position = tankTurret.transform.position;
             }
         }
+        // Here we'll instantiate from "playerHUD" and "gameUI" prefabs
+        // ...
     }
 
     private void Start()
