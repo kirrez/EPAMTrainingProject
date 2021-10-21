@@ -7,11 +7,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 3f;
 
+    private PlayerShooting playerShooting;
     private Rigidbody _rigidbody;
     private Vector3 _direction;
     private Vector3 _bodyDirection = new Vector3(0f, 0f, 1f);
     private float _bodyAngle = 0f;
     private Vector3 _lookDirection;
+
 
     public Transform tankBody;
     public Transform tankTurret;
@@ -21,12 +23,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _direction = Vector3.zero;
         _rigidbody = GetComponent<Rigidbody>();
+        playerShooting = GetComponent<PlayerShooting>();
     }
 
     void Update()
     {
-        _direction.x = Input.GetAxisRaw("Horizontal");
-        _direction.z = Input.GetAxisRaw("Vertical");
+        if (playerShooting.PlayerAlive)
+        {
+            _direction.x = Input.GetAxisRaw("Horizontal");
+            _direction.z = Input.GetAxisRaw("Vertical");
+        }
 
         _bodyDirection = _direction;
 
@@ -41,9 +47,11 @@ public class PlayerMovement : MonoBehaviour
     {
         var offset = _rigidbody.position + _direction * moveSpeed * Time.fixedDeltaTime;
 
-        _rigidbody.MovePosition(offset);
-
-        TurretDirectionUpdate();
+        if (playerShooting.PlayerAlive)
+        {
+            _rigidbody.MovePosition(offset);
+            TurretDirectionUpdate();
+        }
     }
 
     private void TurretDirectionUpdate()

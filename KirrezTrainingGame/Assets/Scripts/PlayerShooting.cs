@@ -17,6 +17,8 @@ public class PlayerShooting : MonoBehaviour
     public int CurrentHitpoints { get; set; }
     public float invulnerabilityPeriod = 1.5f; // time before player can be damaged again
 
+    public bool PlayerAlive { get; set; } = true;
+
     private bool _tankBlinking = false; // for changing meshes
     private bool _blinkingEffect = false;
     private float _currentPeriod = 0f;
@@ -26,6 +28,8 @@ public class PlayerShooting : MonoBehaviour
     private Weapon[] Weapons { get; set; }
     //private PlayerHUD PlayerHUD;
 
+    private GameObject tankExplosionRes;
+    
     public GameObject[] tankNormalMesh = new GameObject[4];
     public GameObject[] tankBlinkingMesh = new GameObject[4];
 
@@ -34,6 +38,8 @@ public class PlayerShooting : MonoBehaviour
 
     private void Awake()
     {
+        tankExplosionRes = Resources.Load<GameObject>("Prefabs/Tank Parts/TankShards");
+
         Weapons = new Weapon[WeaponPrefabs.Length];
 
         for (int i = 0; i < WeaponPrefabs.Length; i++)
@@ -81,24 +87,32 @@ public class PlayerShooting : MonoBehaviour
     private void Update()
     {
         // choosing weapons
-        if (Input.GetKey(KeyCode.Alpha1) && Weapons.Length >= 1) _weaponIndex = 0;
-        if (Input.GetKey(KeyCode.Alpha2) && Weapons.Length >= 2) _weaponIndex = 1;
-        if (Input.GetKey(KeyCode.Alpha3) && Weapons.Length >= 3) _weaponIndex = 2;
-        if (Input.GetKey(KeyCode.Alpha4) && Weapons.Length >= 4) _weaponIndex = 3;
-        if (Input.GetKey(KeyCode.Alpha5) && Weapons.Length >= 5) _weaponIndex = 4;
-
-        //debug
-        if (Input.GetKeyUp(KeyCode.Space) && (playerHUD.Invulnerability == false))
+        if (PlayerAlive)
         {
-            CurrentHitpoints--;
-            playerHUD.UpdateCurrentHP(CurrentHitpoints);
-            playerHUD.ActivateInvulnerability();
-            ActivateBlinkingEffect();
-        }
+            if (Input.GetKey(KeyCode.Alpha1) && Weapons.Length >= 1) _weaponIndex = 0;
+            if (Input.GetKey(KeyCode.Alpha2) && Weapons.Length >= 2) _weaponIndex = 1;
+            if (Input.GetKey(KeyCode.Alpha3) && Weapons.Length >= 3) _weaponIndex = 2;
+            if (Input.GetKey(KeyCode.Alpha4) && Weapons.Length >= 4) _weaponIndex = 3;
+            if (Input.GetKey(KeyCode.Alpha5) && Weapons.Length >= 5) _weaponIndex = 4;
 
-        if (Input.GetButton("Fire1"))
-        {
-            if (Weapons[_weaponIndex] != null) Weapons[_weaponIndex].Shoot(firePoint);
+            //debug
+            if (Input.GetKeyUp(KeyCode.Space) && (playerHUD.Invulnerability == false))
+            {
+                CurrentHitpoints--;
+                playerHUD.UpdateCurrentHP(CurrentHitpoints);
+                if (CurrentHitpoints == 0)
+                {
+                    ExplodeTank();
+                    return;
+                }
+                playerHUD.ActivateInvulnerability();
+                ActivateBlinkingEffect();
+            }
+
+            if (Input.GetButton("Fire1"))
+            {
+                if (Weapons[_weaponIndex] != null) Weapons[_weaponIndex].Shoot(firePoint);
+            }
         }
     }
 
@@ -154,6 +168,18 @@ public class PlayerShooting : MonoBehaviour
             SwitchTankMesh(_tankBlinking); // temporary
             _secondTimer = _blinkingDelta;
         }
+    }
+
+    private void ExplodeTank()
+    {
+        for (int i = 0; i < TankBlinkingMesh.Length; i++)
+        {
+            TankBlinkingMesh[i].SetActive(false);
+            TankNormalMesh[i].SetActive(false);
+        }
+        var explosion = Instantiate(tankExplosionRes, transform, false);
+        PlayerAlive = false;
+        gameUI.ActivateGameoverScreen();
     }
 
 }
