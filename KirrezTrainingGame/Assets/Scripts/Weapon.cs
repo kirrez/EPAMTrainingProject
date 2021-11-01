@@ -96,7 +96,36 @@ public class Weapon : MonoBehaviour
                 CurrentClipSize--;
                 ShotsLeft = shotsInClip;
             }
-            if (ShotsLeft > 0)
+            if ((ShotsLeft > 0) || (ShotsLeft < 0)) // < 0 for enemies since they have endless ammo
+            {
+                BulletStatus[BulletIndex] = 1; // set status to "flying"
+                CurrentCooldown = shootingCooldown;
+                Bullets[BulletIndex].SetActive(true);
+                var rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
+                rBody.transform.position = firePoint.position;
+                rBody.transform.rotation = firePoint.rotation;
+                rBody.velocity = rBody.transform.forward * bulletSpeed;
+                UpdateIndex();
+
+                ShotsLeft--;
+            }
+            //Debug.Log($"Clips : {CurrentClipSize} Shots : {ShotsLeft}");
+        }
+    }
+
+    public void ForcedShoot(Transform firePoint)
+    {
+        CurrentCooldown = 0;
+        if ((BulletStatus[BulletIndex] == 0) && (CurrentCooldown <= 0))
+        {
+            if ((ShotsLeft == 0) && (CurrentClipSize == 0)) return;
+            if ((ShotsLeft == 0) && (CurrentClipSize > 0))
+            {
+                // it's an instant reloading ))
+                CurrentClipSize--;
+                ShotsLeft = shotsInClip;
+            }
+            if ((ShotsLeft > 0) || (ShotsLeft < 0)) // < 0 for enemies since they have endless ammo
             {
                 BulletStatus[BulletIndex] = 1; // set status to "flying"
                 CurrentCooldown = shootingCooldown;

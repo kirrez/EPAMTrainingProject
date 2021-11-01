@@ -96,23 +96,31 @@ public class PlayerShooting : MonoBehaviour
             if (Input.GetKey(KeyCode.Alpha5) && Weapons.Length >= 5) _weaponIndex = 4;
 
             //debug
-            if (Input.GetKeyUp(KeyCode.Space) && (playerHUD.Invulnerability == false))
+            if (Input.GetKeyUp(KeyCode.Space))
             {
-                CurrentHitpoints--;
-                playerHUD.UpdateCurrentHP(CurrentHitpoints);
-                if (CurrentHitpoints == 0)
-                {
-                    ExplodeTank();
-                    return;
-                }
-                playerHUD.ActivateInvulnerability();
-                ActivateBlinkingEffect();
+                ReceiveDamage();
             }
 
             if (Input.GetButton("Fire1"))
             {
                 if (Weapons[_weaponIndex] != null) Weapons[_weaponIndex].Shoot(firePoint);
             }
+        }
+    }
+
+    public void ReceiveDamage()
+    {
+        if ((PlayerAlive) && (playerHUD.Invulnerability == false))
+        {
+            CurrentHitpoints--;
+            playerHUD.UpdateCurrentHP(CurrentHitpoints);
+            if (CurrentHitpoints == 0)
+            {
+                ExplodeTank();
+                return;
+            }
+            playerHUD.ActivateInvulnerability();
+            ActivateBlinkingEffect();
         }
     }
 

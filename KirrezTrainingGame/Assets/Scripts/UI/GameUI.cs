@@ -13,7 +13,7 @@ public class GameUI : MonoBehaviour
     // text blinking effect
     public Image victoryFront;
     public Image victoryBack;
-    private float hue = 0f;
+    //private float hue = 0f;
     private bool _victoryActivated = false;
 
     private void Start()

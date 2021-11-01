@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5083238967038469670}
   - component: {fileID: 5083238967041861240}
   - component: {fileID: 5083238967040894136}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: TracksRightMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

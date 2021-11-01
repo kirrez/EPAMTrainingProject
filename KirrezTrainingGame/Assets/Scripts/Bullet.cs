@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public BulletType type;
+
     private float _maxLifetime = 3f; // get from Weapon class
     private float _currentLifetime = 0f;
     private float _bulletDamage = 1f; // get from Weapon class
@@ -34,24 +36,23 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy Unit")
+        if ((type == BulletType.PvE_bullet) && (other.tag == "Enemy Unit"))
         {
             Enemy target = other.GetComponent<Enemy>();
-            Debug.Log("Hit enemy!");
+            //Debug.Log("Hit enemy!");
             target.ReceiveBulletDamage(_bulletDamage);
-            //_piercingAmount--;
             //// if value goes below zero, it means our weapon doesn't use piercing logic
             if (_piercingAmount == 0) FlightFinished = true;
             else _piercingAmount--;
         }
+        if ((type == BulletType.EvP_bullet) && (other.tag == "PlayerTank"))
+        {
+            var player = other.GetComponentInParent<PlayerShooting>();
+            player.ReceiveDamage();
+            // bullet's destruction.. ?
+            FlightFinished = true;
+        }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        
-    }
-
-
 
     public void SetLifetime(float lifetime)
     {

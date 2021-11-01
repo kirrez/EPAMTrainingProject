@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4483390691690705322}
   - component: {fileID: 4483390691693572600}
   - component: {fileID: 4483390691692606264}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: ChassisMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
