@@ -11,8 +11,15 @@ public class Bullet : MonoBehaviour
     private float _bulletDamage = 1f; // get from Weapon class
     private int _maxPiercingAmount = 0;
     private int _piercingAmount = 0;
+    private GameObject hitSparclePrefab;
+    private GameObject sparcle;
 
     public bool FlightFinished { get; set; }
+
+    private void Awake()
+    {
+        hitSparclePrefab = Resources.Load<GameObject>("Prefabs/HitEnemySparcle");
+    }
 
     private void OnEnable()
     {
@@ -41,6 +48,9 @@ public class Bullet : MonoBehaviour
             Enemy target = other.GetComponent<Enemy>();
             //Debug.Log("Hit enemy!");
             target.ReceiveBulletDamage(_bulletDamage);
+            //Effect of enemy being hit
+            sparcle = Instantiate(hitSparclePrefab, transform.position, Quaternion.identity);
+            Destroy(sparcle, 0.5f);
             //// if value goes below zero, it means our weapon doesn't use piercing logic
             if (_piercingAmount == 0) FlightFinished = true;
             else _piercingAmount--;
@@ -50,6 +60,11 @@ public class Bullet : MonoBehaviour
             var player = other.GetComponentInParent<PlayerShooting>();
             player.ReceiveDamage();
             // bullet's destruction.. ?
+            FlightFinished = true;
+        }
+
+        if (other.gameObject.layer == 7)
+        {
             FlightFinished = true;
         }
     }

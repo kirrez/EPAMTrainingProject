@@ -35,8 +35,10 @@ public class WeaponSpray : Weapon
 
                 rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
                 rBody.transform.position = firePoint.position;
+                rBody.transform.rotation = firePoint.rotation * Quaternion.AngleAxis(-Angle, Vector3.up);
                 direction = firePoint.transform.forward;
                 direction = Quaternion.AngleAxis(-Angle, Vector3.up) * direction;
+                
                 rBody.velocity = direction * bulletSpeed;
                 UpdateIndex();
 
@@ -58,6 +60,7 @@ public class WeaponSpray : Weapon
 
                 rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
                 rBody.transform.position = firePoint.position;
+                rBody.transform.rotation = firePoint.rotation * Quaternion.AngleAxis(Angle, Vector3.up);
                 direction = firePoint.transform.forward;
                 direction = Quaternion.AngleAxis(Angle, Vector3.up) * direction;
                 rBody.velocity = direction * bulletSpeed;
