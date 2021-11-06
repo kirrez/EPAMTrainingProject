@@ -13,11 +13,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _bodyDirection = new Vector3(0f, 0f, 1f);
     private float _bodyAngle = 0f;
     private Vector3 _lookDirection;
-
+    private Camera _myCamera;
 
     public Transform tankBody;
     public Transform tankTurret;
-    public Camera myCamera;
+    
 
     private void Awake()
     {
@@ -54,10 +54,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void GetCamera(Camera newCamera)
+    {
+        _myCamera = newCamera;
+    }
+
     private void TurretDirectionUpdate()
     {
-        var mouseRay = myCamera.ScreenPointToRay(Input.mousePosition);
-        var midPoint = (transform.position - myCamera.transform.position).magnitude * 0.8f;
+        var mouseRay = _myCamera.ScreenPointToRay(Input.mousePosition);
+        var midPoint = (transform.position - _myCamera.transform.position).magnitude * 0.8f;
         _lookDirection = mouseRay.origin + mouseRay.direction * midPoint;
         _lookDirection.y = tankTurret.position.y;
         tankTurret.LookAt(_lookDirection);

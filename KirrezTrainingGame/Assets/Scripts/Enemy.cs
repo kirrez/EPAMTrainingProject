@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class Enemy : MonoBehaviour
 
     public Transform model; // link for self-rotating spikedmine
     public EnemyType Type { get; set; }
+    public HealthBar HealthBar { get; set; } = null;
+    public Canvas EnemyCanvas { get; set; } = null;
 
     private Transform firepoint;
     private Weapon weapon;
@@ -40,12 +43,22 @@ public class Enemy : MonoBehaviour
         {
             firepoint = unitData.firepoint;
         }
+
+        //var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HealtBar");
+        //var hbInstance = Instantiate(healthBarPrefab, EnemyCanvas.transform);
+        //HealthBar = hbInstance.GetComponent<HealthBar>();
+        //HealthBar.GetComponent<GameObject>().transform.SetParent(EnemyCanvas.transform);
     }
 
     private void OnEnable()
     {
         SetupUnitData();
         state = EnemyState.Idle;
+        // учтено нулл
+        if (HealthBar != null)
+        {
+            HealthBar.Initialize(_maxHitPoints);
+        }
     }
 
     private void FixedUpdate()
@@ -280,6 +293,7 @@ public class Enemy : MonoBehaviour
     public void ReceiveBulletDamage(float damage)
     {
         _currentHitPoints -= damage;
+        if (HealthBar != null) HealthBar.UpdateHealth(_currentHitPoints);
         if (_currentHitPoints < 0)
         {
             _currentHitPoints = 0;
