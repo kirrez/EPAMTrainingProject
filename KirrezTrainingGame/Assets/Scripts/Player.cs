@@ -1,16 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerShooting : MonoBehaviour
+public class Player : MonoBehaviour, IPlayer
 {
+    public event Action<int> HealthChanged;
+
     public Transform tankBody;
     public Transform tankTurret;
 
     public Weapon[] WeaponPrefabs = new Weapon[3]; // prefabs
     public Transform firePoint;
-    public PlayerHUD playerHUD; // still not prefab, but it sure will
+    //public PlayerHUD playerHUD; // still not prefab, but it sure will
     public GameUI gameUI; // still not prefab, but it sure will
 
     public int maxHitpoints = 3;
@@ -32,6 +35,8 @@ public class PlayerShooting : MonoBehaviour
     
     public GameObject[] tankNormalMesh = new GameObject[4];
     public GameObject[] tankBlinkingMesh = new GameObject[4];
+
+    
 
     public GameObject[] TankNormalMesh { get; set; } = new GameObject[4];
     public GameObject[] TankBlinkingMesh { get; set; } = new GameObject[4];
@@ -78,8 +83,8 @@ public class PlayerShooting : MonoBehaviour
 
     private void Start()
     {
-        playerHUD.SetMaxHP(maxHitpoints);
-        playerHUD.SetInvulnerabilityPeriod(invulnerabilityPeriod);
+        //playerHUD.SetMaxHP(maxHitpoints);
+        //playerHUD.SetInvulnerabilityPeriod(invulnerabilityPeriod);
 
         SwitchTankMesh(_tankBlinking);
     }
@@ -110,18 +115,25 @@ public class PlayerShooting : MonoBehaviour
 
     public void ReceiveDamage()
     {
-        if ((PlayerAlive) && (playerHUD.Invulnerability == false))
+        //if ((PlayerAlive) && (playerHUD.Invulnerability == false))
+        //{
+        CurrentHitpoints--;
+
+        HealthChanged?.Invoke(CurrentHitpoints);
+
+        //playerHUD.UpdateCurrentHP(CurrentHitpoints);
+
+        if (CurrentHitpoints == 0)
         {
-            CurrentHitpoints--;
-            playerHUD.UpdateCurrentHP(CurrentHitpoints);
-            if (CurrentHitpoints == 0)
-            {
-                ExplodeTank();
-                return;
-            }
-            playerHUD.ActivateInvulnerability();
-            ActivateBlinkingEffect();
+            ExplodeTank();
+            return;
         }
+
+        //playerHUD.ActivateInvulnerability();
+
+        ActivateBlinkingEffect();
+
+        //}
     }
 
     private void FixedUpdate()

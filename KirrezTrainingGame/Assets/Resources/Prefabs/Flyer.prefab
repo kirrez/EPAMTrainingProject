@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2193359356975753917}
   - component: {fileID: 2193359356975753916}
   - component: {fileID: 5889155307849452512}
+  - component: {fileID: -7353476727278118583}
   m_Layer: 0
   m_Name: Flyer
   m_TagString: Enemy Unit
@@ -97,6 +98,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-7353476727278118583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193359356975753915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c601eb626c0eed49bd484d6a743c978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0, y: 0, z: 1.5}
 --- !u!1 &2193359357062949373
 GameObject:
   m_ObjectHideFlags: 0

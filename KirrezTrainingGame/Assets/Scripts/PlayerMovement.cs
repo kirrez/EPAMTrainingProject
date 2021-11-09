@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 3f;
 
-    private PlayerShooting playerShooting;
+    private Player playerShooting;
     private Rigidbody _rigidbody;
     private Vector3 _direction;
     private Vector3 _bodyDirection = new Vector3(0f, 0f, 1f);
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _direction = Vector3.zero;
         _rigidbody = GetComponent<Rigidbody>();
-        playerShooting = GetComponent<PlayerShooting>();
+        playerShooting = GetComponent<Player>();
     }
 
     void Update()

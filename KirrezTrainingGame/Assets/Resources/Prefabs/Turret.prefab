@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3439985740577808502}
   - component: {fileID: 3439985740577808503}
   - component: {fileID: 3439985740577808500}
+  - component: {fileID: -4131813017062984451}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Enemy Unit
@@ -112,6 +113,19 @@ MonoBehaviour:
   firepoint: {fileID: 3439985740262234700}
   weaponPrefab: {fileID: 5510831075705327019, guid: 06ae5c37f63650b40b1ae8a02cbf9d35, type: 3}
   deathExplosion: {fileID: 1438714148614482237, guid: daac7e643c44ff54b9586b02315943e7, type: 3}
+--- !u!114 &-4131813017062984451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3439985740577808501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c601eb626c0eed49bd484d6a743c978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0, y: 0, z: 1.5}
 --- !u!1 &3439985740697740767
 GameObject:
   m_ObjectHideFlags: 0

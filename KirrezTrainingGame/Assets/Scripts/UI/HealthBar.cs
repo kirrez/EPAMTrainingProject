@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : BaseView, IHealthBar
 {
     private Slider slider;
     private float _maxHealth;
@@ -14,17 +11,29 @@ public class HealthBar : MonoBehaviour
         slider = GetComponent<Slider>();
     }
 
-    public void Initialize(float health)
+    //public void Initialize(float health)
+    //{
+    //    _maxHealth = health;
+    //    _currentHealth = _maxHealth;
+    //    slider.value = 1f;
+    //}
+
+    public void SetHealth(float health)
     {
-        _maxHealth = health;
+        _currentHealth = health;
+        slider.value = _currentHealth / _maxHealth;
+
+        if (_currentHealth <= 0) slider.value = 0f;
+    }
+
+    public void ResetHealth()
+    {
         _currentHealth = _maxHealth;
         slider.value = 1f;
     }
 
-    public void UpdateHealth(float health)
+    public void SetMaxHealth(float value)
     {
-        _currentHealth = health;
-        slider.value = _currentHealth / _maxHealth;
-        if (_currentHealth <= 0) slider.value = 0f;
+        _maxHealth = value;
     }
 }

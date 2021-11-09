@@ -2,9 +2,28 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IHealth
 {
     public event Action<Enemy> Died;
+
+    public event Action<float> HealthChanged;
+    public event Action<float> MaxHealthChanged;
+
+    public float MaxHealth
+    {
+        get
+        {
+            return _maxHitPoints;
+        }
+    }
+
+    public float CurrentHealth
+    {
+        get
+        {
+            return _currentHitPoints;
+        }
+    }
 
     public Transform model; // link for self-rotating spikedmine
     public EnemyType Type { get; set; }
@@ -35,16 +54,18 @@ public class Enemy : MonoBehaviour
         unitData = GetComponent<EnemyProperties>();
         _rigidbody = GetComponent<Rigidbody>();
         _direction = Vector3.zero;
+
         if (unitData.weaponPrefab != null)
         {
             weapon = Instantiate(unitData.weaponPrefab, transform.position, transform.rotation);
         }
+
         if (unitData.firepoint != null)
         {
             firepoint = unitData.firepoint;
         }
 
-        //var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HealtBar");
+        //var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HealthBar");
         //var hbInstance = Instantiate(healthBarPrefab, EnemyCanvas.transform);
         //HealthBar = hbInstance.GetComponent<HealthBar>();
         //HealthBar.GetComponent<GameObject>().transform.SetParent(EnemyCanvas.transform);
@@ -54,10 +75,13 @@ public class Enemy : MonoBehaviour
     {
         SetupUnitData();
         state = EnemyState.Idle;
+
         // учтено нулл
         if (HealthBar != null)
         {
-            HealthBar.Initialize(_maxHitPoints);
+            //HealthBar.Initialize(_maxHitPoints);
+            HealthBar.SetMaxHealth(_maxHitPoints);
+            HealthBar.ResetHealth();
         }
     }
 
@@ -163,12 +187,13 @@ public class Enemy : MonoBehaviour
         }
 
         transform.LookAt(_target);
-
         var moveSpeed = _moveSpeed;
+
         if (acceleration)
         {
             moveSpeed *= 2;
         }
+
         var offset = transform.position + transform.forward * moveSpeed * Time.fixedDeltaTime;
         _rigidbody.MovePosition(offset);
 
@@ -183,6 +208,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
+
         transform.LookAt(_target);
         weapon.Shoot(firepoint);
     }
@@ -193,14 +219,20 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
+
         if (_preparingTime > 0)
         {
             _preparingTime -= Time.fixedDeltaTime;
             transform.LookAt(transform.position + _direction);
             var offset = transform.position + transform.forward * _moveSpeed * Time.fixedDeltaTime;
             _rigidbody.MovePosition(offset);
-            if (active == true) weapon.ForcedShoot(firepoint);
+
+            if (active == true)
+            {
+                weapon.ForcedShoot(firepoint);
+            }
         }
+
         if (_preparingTime <= 0)
         {
             _maxPreparingTime = UnityEngine.Random.Range(1f, 3f);
@@ -211,9 +243,11 @@ public class Enemy : MonoBehaviour
                 int newDirection = UnityEngine.Random.Range(0, 7);
                 _direction = CopmassDirection(newDirection);
             }
+
             if (active == true)
             {
                 var chance = UnityEngine.Random.Range(0f, 1f);
+
                 if (chance < 0.5f)
                 {
                     // random direction
@@ -233,10 +267,21 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerTank")
         {
-            var player = collision.gameObject.GetComponentInParent<PlayerShooting>();
+            var player = collision.gameObject.GetComponentInParent<Player>();
             player.ReceiveDamage();
-            SelfDestruction();
+
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        _currentHitPoints = 0f;
+
+        ShowDieEffect();
+
+        HealthChanged?.Invoke(_currentHitPoints);
+        Died?.Invoke(this);
     }
 
     // some enemies falls from sky on your head, another jumps from below your feet
@@ -266,8 +311,12 @@ public class Enemy : MonoBehaviour
     private void SetupUnitData()
     {
         Type = unitData.type;
+
         _maxHitPoints = unitData.hitPoints;
         _currentHitPoints = _maxHitPoints;
+
+        MaxHealthChanged?.Invoke(_maxHitPoints);
+        HealthChanged?.Invoke(_currentHitPoints);
 
         _moveSpeed = unitData.moveSpeed;
         _activationRadius = unitData.activationRadius;
@@ -290,19 +339,21 @@ public class Enemy : MonoBehaviour
         else return false;
     }
 
-    public void ReceiveBulletDamage(float damage)
+    public void ReceiveDamage(float damage)
     {
         _currentHitPoints -= damage;
-        if (HealthBar != null) HealthBar.UpdateHealth(_currentHitPoints);
+
+        HealthChanged?.Invoke(_currentHitPoints);
+
+        //if (HealthBar != null) HealthBar.UpdateHealth(_currentHitPoints);
+
         if (_currentHitPoints < 0)
         {
-            _currentHitPoints = 0;
-            SelfDestruction();
-            Died?.Invoke(this);
+            Die();
         }
     }
 
-    public void SelfDestruction()
+    public void ShowDieEffect()
     {
         if (_deathExplosionPrefab != null)
         {

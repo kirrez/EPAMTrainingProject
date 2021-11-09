@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4978373792210791462}
   - component: {fileID: 4978373792210791461}
   - component: {fileID: 4978373792210791460}
+  - component: {fileID: -973525020041202206}
   m_Layer: 0
   m_Name: Spikedmine
   m_TagString: Enemy Unit
@@ -97,6 +98,19 @@ MonoBehaviour:
   firepoint: {fileID: 0}
   weaponPrefab: {fileID: 0}
   deathExplosion: {fileID: 1438714148614482237, guid: daac7e643c44ff54b9586b02315943e7, type: 3}
+--- !u!114 &-973525020041202206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4978373792210791463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c601eb626c0eed49bd484d6a743c978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0, y: 0, z: 1.5}
 --- !u!1001 &6988385941357670524
 PrefabInstance:
   m_ObjectHideFlags: 0

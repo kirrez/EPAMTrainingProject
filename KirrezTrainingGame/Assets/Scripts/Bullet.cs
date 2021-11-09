@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
         {
             Enemy target = other.GetComponent<Enemy>();
             //Debug.Log("Hit enemy!");
-            target.ReceiveBulletDamage(_bulletDamage);
+            target.ReceiveDamage(_bulletDamage);
             //Effect of enemy being hit
             sparcle = Instantiate(hitSparclePrefab, transform.position, Quaternion.identity);
             Destroy(sparcle, 0.5f);
@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
         }
         if ((type == BulletType.EvP_bullet) && (other.tag == "PlayerTank"))
         {
-            var player = other.GetComponentInParent<PlayerShooting>();
+            var player = other.GetComponentInParent<Player>();
             player.ReceiveDamage();
             // bullet's destruction.. ?
             FlightFinished = true;

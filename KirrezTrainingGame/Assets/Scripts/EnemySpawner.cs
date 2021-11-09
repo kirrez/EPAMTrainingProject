@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
 
     public EnemyType type;
     public Transform boundary;
-    public PlayerShooting player;
+    public Player player;
     public Transform target;
 
     public int maxActiveEnemies;

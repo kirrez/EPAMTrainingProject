@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public PlayerShooting Player;
+    public Player Player;
     public List<EnemySpawner> EnemySpawners;
 
-    private GameObject _gameCamera;
+    private PlayerHUD _playerHUD;
     private Canvas _enemyCanvas;
+    private GameObject _gameCamera;
 
     private void Awake()
     {
+        _playerHUD = FindObjectOfType<PlayerHUD>();
+
         //Camera Setup
         var cameraPrefab = Resources.Load<GameObject>("Prefabs/MainCamera");
         _gameCamera = Instantiate(cameraPrefab);
@@ -22,6 +25,16 @@ public class Game : MonoBehaviour
         {
             spawner.EnemySpawned += OnEnemySpawned;
         }
+
+        var hitPoints = PlayerSettings.UserMaxHitpoints;
+        _playerHUD.SetMaxHP(hitPoints);
+
+        Player.HealthChanged += OnPlayerHealthChanged;
+    }
+
+    private void OnPlayerHealthChanged(int value)
+    {
+        _playerHUD.UpdateCurrentHP(value);
     }
 
     private void Start()
