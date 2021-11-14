@@ -199,7 +199,7 @@ public class Player : MonoBehaviour, IPlayer
         }
         var explosion = Instantiate(tankExplosionRes, transform, false);
         PlayerAlive = false;
-        gameUI.ActivateGameoverScreen();
+        gameUI.ShowGameOverScreen();
     }
 
 }

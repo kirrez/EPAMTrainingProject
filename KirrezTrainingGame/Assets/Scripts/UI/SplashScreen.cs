@@ -14,6 +14,7 @@ public class SplashScreen : MonoBehaviour
     private float startYposition = 0f;
     private Color fadeColor;
     private PlayerSettings playerSettings;
+    private MySceneManagment sceneManager;
 
     public Image fade;
     public RectTransform splashScreen;
@@ -22,46 +23,35 @@ public class SplashScreen : MonoBehaviour
     public GameObject MainMenu;
     public GameObject Options;
 
-    private void UpdateLivesAmountText()
-    {
-        livesAmount.text = playerSettings.GetMaxHitpoints().ToString();
-    }
+    [Header("Main Menu")]
+    public Button StartGameButton;
+    public Button OptionsButton;
+    public Button QuitButton;
 
-    private void ActivateSplash()
-    {
-        startYposition = splashScreen.position.y;
-        distance = splashScreen.position.y - _splashOffset;
-        splashScreen.position = new Vector3(splashScreen.position.x, distance, 0f);
-        _currentTime = SplashMovementPeriod;
-        _currentFadeTime = FadePeriod;
-        fadeColor = fade.color;
-    }
+    [Header("Options")]
+    public Button AddLivesButton;
+    public Button DecreaseLivesButton;
+    public Button BackToMenuButton;
 
-    // for buttons
-    public void ChangeLivesNumber(bool increase)
+    private void Awake()
     {
-        playerSettings.SetHitpoints(increase);
-        UpdateLivesAmountText();
-    }
+        sceneManager = GetComponent<MySceneManagment>();
+        playerSettings = gameObject.GetComponent<PlayerSettings>();
 
-    // for buttons
-    public void ActivateMainMenu(bool activate)
-    {
-        MainMenu.SetActive(activate);
-    }
+        StartGameButton.onClick.AddListener(OnStartGameClick);
+        OptionsButton.onClick.AddListener(OnOptionsClick);
+        QuitButton.onClick.AddListener(OnQuitClick);
 
-    // for buttons
-    public void ActivateOptions(bool activate)
-    {
-        Options.SetActive(activate);
+        AddLivesButton.onClick.AddListener(OnAddLivesClick);
+        DecreaseLivesButton.onClick.AddListener(OnDecreaseLivesClick);
+        BackToMenuButton.onClick.AddListener(OnBackToMenuClick);
     }
 
     private void Start()
     {
-        ActivateMainMenu(true);
-        ActivateOptions(false);
+        ShowMainMenu();
+        HideOptions();
         ActivateSplash();
-        playerSettings = gameObject.GetComponent<PlayerSettings>();
         UpdateLivesAmountText();
     }
 
@@ -81,5 +71,74 @@ public class SplashScreen : MonoBehaviour
             fade.color = fadeColor;
             _currentFadeTime -= Time.fixedDeltaTime;
         }
+    }
+
+    public void OnStartGameClick()
+    {
+        sceneManager.StartNewGame();
+    }
+
+    public void OnOptionsClick()
+    {
+        HideMainMenu();
+        ShowOptions();
+    }
+
+    public void OnQuitClick()
+    {
+        sceneManager.ExitGame();
+    }
+
+    public void OnAddLivesClick()
+    {
+        playerSettings.SetHitpoints(true);
+        UpdateLivesAmountText();
+    }
+
+    public void OnDecreaseLivesClick()
+    {
+        playerSettings.SetHitpoints(false);
+        UpdateLivesAmountText();
+    }
+
+    public void OnBackToMenuClick()
+    {
+        HideOptions();
+        ShowMainMenu();
+    }
+
+    private void UpdateLivesAmountText()
+    {
+        livesAmount.text = playerSettings.GetMaxHitpoints().ToString();
+    }
+
+    private void ActivateSplash()
+    {
+        startYposition = splashScreen.position.y;
+        distance = splashScreen.position.y - _splashOffset;
+        splashScreen.position = new Vector3(splashScreen.position.x, distance, 0f);
+        _currentTime = SplashMovementPeriod;
+        _currentFadeTime = FadePeriod;
+        fadeColor = fade.color;
+    }
+
+    public void ShowMainMenu()
+    {
+        MainMenu.SetActive(true);
+    }
+
+    public void HideMainMenu()
+    {
+        MainMenu.SetActive(false);
+    }
+
+    public void ShowOptions()
+    {
+        Options.SetActive(true);
+    }
+
+    public void HideOptions()
+    {
+        Options.SetActive(false);
     }
 }
