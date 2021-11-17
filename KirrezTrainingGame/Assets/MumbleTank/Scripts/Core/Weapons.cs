@@ -1,0 +1,8 @@
+public enum Weapons
+{
+    Cannon,
+    Rifle,
+    FastRifle,
+    Spray,
+    Machinegun
+}
