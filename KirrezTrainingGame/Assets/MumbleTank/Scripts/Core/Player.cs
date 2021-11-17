@@ -21,13 +21,16 @@ public class Player : MonoBehaviour, IPlayer
 
     private List<Weapon> _weaponsList = new List<Weapon>();
 
-    private BlinkingEffect Effects;
+    private ExplodeEffect _explodeEffect;
+    private BlinkingEffect _blinkingEffect;
     private IResourceManager _resourceManager;
 
     private void Awake()
     {
         _resourceManager = ServiceLocator.GetResourceManager();
-        Effects = GetComponent<BlinkingEffect>();
+
+        _explodeEffect = GetComponent<ExplodeEffect>();
+        _blinkingEffect = GetComponent<BlinkingEffect>();
 
         AddWeapon(Weapons.Machinegun);
         AddWeapon(Weapons.Spray);
@@ -80,7 +83,7 @@ public class Player : MonoBehaviour, IPlayer
 
         if (CurrentHitpoints == 0)
         {
-            Effects.Explode();
+            _explodeEffect.Explode();
             PlayerAlive = false;
 
             return;
@@ -88,7 +91,7 @@ public class Player : MonoBehaviour, IPlayer
 
         //playerHUD.ActivateInvulnerability();
 
-        Effects.StartBlinking();
+        _blinkingEffect.StartBlinking();
         _shieldTimer = ShieldTime;
         _isShielded = true;
 
@@ -109,7 +112,7 @@ public class Player : MonoBehaviour, IPlayer
 
         if (_shieldTimer <= 0)
         {
-            Effects.StopBlinking();
+            _blinkingEffect.StopBlinking();
             _isShielded = false;
         }
     }

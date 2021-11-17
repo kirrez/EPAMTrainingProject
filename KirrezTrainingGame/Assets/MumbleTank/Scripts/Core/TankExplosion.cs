@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TankExplosion : MonoBehaviour
 {
     public float force = 20f;
     public Transform explosionCenter;
-    public GameObject tank;
     private Collider[] shards;
 
     private void OnEnable()
@@ -22,6 +19,5 @@ public class TankExplosion : MonoBehaviour
             var direction = explosionCenter.position - shard.transform.position;
             shard.GetComponent<Rigidbody>().AddForce(direction * force);
         }
-        //Destroy(tank, 3.5f);
     }
 }

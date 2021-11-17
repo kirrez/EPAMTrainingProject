@@ -3,19 +3,11 @@ using UnityEngine;
 
 public class BlinkingEffect : MonoBehaviour
 {
-    public GameObject Mesh;
     public Color BlinkingColor;
     public float BlinkingFrequency = 0.2f;
 
-    private IResourceManager _resourceManager;
-
     private bool _isBlinking;
     private List<BlinkingItem> _items = new List<BlinkingItem>();
-
-    private void Awake()
-    {
-        _resourceManager = ServiceLocator.GetResourceManager();
-    }
 
     private void Update()
     {
@@ -55,13 +47,10 @@ public class BlinkingEffect : MonoBehaviour
     public void StopBlinking()
     {
         _isBlinking = false;
-    }
 
-    public void Explode()
-    {
-        Mesh.SetActive(false);
-
-        var explodingTank = _resourceManager.CreatePrefab<GameObject, PlayerComponents>(PlayerComponents.ExplodingTank);
-        explodingTank.transform.SetParent(transform, false);
+        foreach (var item in _items)
+        {
+            item.RevertColor();
+        }
     }
 }

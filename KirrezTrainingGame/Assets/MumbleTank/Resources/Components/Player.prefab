@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 6685560394103387030}
   - component: {fileID: 6685560394103387029}
   - component: {fileID: 8611665081146166548}
+  - component: {fileID: 9088337157633684035}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerTank
@@ -236,9 +237,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2ddb1493b065d42ae3366cbecda951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mesh: {fileID: 3117940107623020568}
   BlinkingColor: {r: 1, g: 1, b: 1, a: 1}
   BlinkingFrequency: 0.2
+--- !u!114 &9088337157633684035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6685560394103387027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e5bc722440a5f4891b705484867db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mesh: {fileID: 3117940107623020568}
 --- !u!114 &5410711263908479127
 MonoBehaviour:
   m_ObjectHideFlags: 0
