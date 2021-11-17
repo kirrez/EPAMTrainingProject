@@ -16,6 +16,7 @@ public class ExplodeEffect : MonoBehaviour
         Mesh.SetActive(false);
 
         var explodingTank = _resourceManager.CreatePrefab<Transform, PlayerComponents>(PlayerComponents.ExplodingTank);
-        explodingTank.SetParent(transform, false);
+        explodingTank.position = transform.position;
+        explodingTank.rotation = transform.rotation;
     }
 }

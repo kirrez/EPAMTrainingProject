@@ -13,7 +13,11 @@ public class TankExplosion : MonoBehaviour
 
     private void ActivateExplosion()
     {
-        shards = Physics.OverlapSphere(explosionCenter.position, 5, 6);
+        int layerId = 6;
+        int layerMask = 1 << layerId;
+
+        shards = Physics.OverlapSphere(explosionCenter.position, 5, layerMask);
+
         foreach (var shard in shards)
         {
             var direction = explosionCenter.position - shard.transform.position;
