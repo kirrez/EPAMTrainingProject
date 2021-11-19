@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OverlayCanvas : MonoBehaviour
+public class OverlayCanvas : MonoBehaviour, IOverlayCanvas
 {
 
 }

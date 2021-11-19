@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHUD : MonoBehaviour
+public class PlayerHUD : MonoBehaviour, IPlayerHUD
 {
     public Image TankNormalIcon;
     public Image TankDamagedIcon;
@@ -24,8 +24,11 @@ public class PlayerHUD : MonoBehaviour
 
     public bool Invulnerability { get; set; } = false; // upper class can access it for determination of possibility being damaged again
 
+    //private IResourceManager _resourceManager;
+
     private void Awake()
     {
+        //_resourceManager = ServiceLocator.GetResourceManager();
         // setting Tank icons into base undamaged state
         TankNormalIcon.gameObject.SetActive(true);
         TankDamagedIcon.gameObject.SetActive(false);

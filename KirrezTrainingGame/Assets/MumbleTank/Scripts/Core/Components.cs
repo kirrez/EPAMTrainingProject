@@ -1,5 +1,5 @@
 public enum Components
 {
-    GameCamera
-
+    GameCamera,
+    Player
 }

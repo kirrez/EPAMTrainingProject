@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour, IPlayer
 {
     public event Action<int> HealthChanged;
+    public event Action Killed;
 
     public bool PlayerAlive { get; set; } = true;
     public int CurrentHitpoints { get; set; }
@@ -20,6 +21,8 @@ public class Player : MonoBehaviour, IPlayer
     private int _weaponIndex = 0;
 
     private List<Weapon> _weaponsList = new List<Weapon>();
+
+    private Transform _targetForEnemy;
 
     private ExplodeEffect _explodeEffect;
     private BlinkingEffect _blinkingEffect;
@@ -39,6 +42,8 @@ public class Player : MonoBehaviour, IPlayer
         // player always starts with full HP
         maxHitpoints = GetComponent<PlayerSettings>().GetMaxHitpoints(); // gameObject with "PlayerShooting" script must also have "PlayerSettings" script on it
         CurrentHitpoints = maxHitpoints;
+
+        // _targetForEnemy = ...
     }
 
     private void Start()
@@ -85,6 +90,7 @@ public class Player : MonoBehaviour, IPlayer
         {
             _explodeEffect.Explode();
             PlayerAlive = false;
+            Killed?.Invoke();
 
             return;
         }
@@ -125,5 +131,15 @@ public class Player : MonoBehaviour, IPlayer
         weapon.transform.SetParent(transform);
 
         _weaponsList.Add(weapon);
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public void SetStartPosition(Transform pos)
+    {
+        transform.position = pos.position;
     }
 }

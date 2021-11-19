@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public event Action<Enemy> EnemySpawned;
+    public event Action<IEnemy> EnemySpawned;
 
     public EnemyType Type;
     public Transform Boundary;
@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private float _scaleZ; // 1/2 of Z scale
 
     private int _killedEnemiesNumber;
-    private List<Enemy> _enemies = new List<Enemy>();
+    private List<IEnemy> _enemies = new List<IEnemy>();
 
     private IResourceManager _resourceManager;
 
@@ -53,10 +53,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void AddEnemy(float X, float Y, float Z)
     {
-        var enemy = _resourceManager.CreatePrefab<Enemy, EnemyType>(Type);
-        enemy.transform.position = new Vector3(X, Y, Z);
-        enemy.transform.rotation = Quaternion.identity;
-        enemy.transform.SetParent(transform);
+        var enemy = _resourceManager.CreatePrefab<IEnemy, EnemyType>(Type);
+        enemy.Position = new Vector3(X, Y, Z);
+        enemy.Rotation = Quaternion.identity;
+        //enemy.transform.SetParent(transform);
 
         _enemies.Add(enemy);
 
@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.Died += OnEnemyDied;
     }
 
-    private void OnEnemyDied(Enemy enemy)
+    private void OnEnemyDied(IEnemy enemy)
     {
         enemy.Died -= OnEnemyDied;
         _killedEnemiesNumber++;

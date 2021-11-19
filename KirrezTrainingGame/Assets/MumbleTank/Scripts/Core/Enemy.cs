@@ -2,10 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour, IHealth
+public class Enemy : MonoBehaviour, IHealth, IEnemy
 {
-    public event Action<Enemy> Died;
-
+    public event Action<IEnemy> Died;
     public event Action<float> HealthChanged;
     public event Action<float> MaxHealthChanged;
 
@@ -25,10 +24,33 @@ public class Enemy : MonoBehaviour, IHealth
         }
     }
 
+    public Vector3 Position
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = value;
+        }
+    }
+
+    public Quaternion Rotation
+    {
+        get
+        {
+            return transform.rotation;
+        }
+        set
+        {
+            transform.rotation = value;
+        }
+    }
+
     public Transform model; // link for self-rotating spikedmine
     public EnemyType Type { get; set; }
     public HealthBar HealthBar { get; set; } = null;
-    public Canvas EnemyCanvas { get; set; } = null;
 
     private Transform firepoint;
     private Weapon weapon;
@@ -46,6 +68,7 @@ public class Enemy : MonoBehaviour, IHealth
     private float _currentHitPoints = 0f;
     private float _moveSpeed = 8f;
     private float _activationRadius = float.MaxValue;
+    private IOverlayCanvas _overlayCanvas;
 
     private Quaternion startRotation = Quaternion.AngleAxis(1f, Vector3.up);
 
@@ -65,10 +88,6 @@ public class Enemy : MonoBehaviour, IHealth
             firepoint = unitData.firepoint;
         }
 
-        //var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HealthBar");
-        //var hbInstance = Instantiate(healthBarPrefab, EnemyCanvas.transform);
-        //HealthBar = hbInstance.GetComponent<HealthBar>();
-        //HealthBar.GetComponent<GameObject>().transform.SetParent(EnemyCanvas.transform);
     }
 
     private void OnEnable()
@@ -116,7 +135,7 @@ public class Enemy : MonoBehaviour, IHealth
             {
                 _preparingTime -= Time.fixedDeltaTime;
                 var finishPosition = transform.position;
-                finishPosition.y = 5f;
+                finishPosition.y = 6f;
                 transform.position = Vector3.Lerp(startPosition, finishPosition, (1 - _preparingTime) / _maxPreparingTime);
             }
             else
@@ -387,5 +406,10 @@ public class Enemy : MonoBehaviour, IHealth
             default:
                 return new Vector3(0f, 0f, 1f);
         }
+    }
+
+    public void GetCanvas(IOverlayCanvas canvas)
+    {
+        _overlayCanvas = canvas;
     }
 }

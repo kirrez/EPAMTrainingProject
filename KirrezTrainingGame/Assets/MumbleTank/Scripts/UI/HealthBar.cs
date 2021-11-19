@@ -11,13 +11,6 @@ public class HealthBar : BaseView, IHealthBar
         slider = GetComponent<Slider>();
     }
 
-    //public void Initialize(float health)
-    //{
-    //    _maxHealth = health;
-    //    _currentHealth = _maxHealth;
-    //    slider.value = 1f;
-    //}
-
     public void SetHealth(float health)
     {
         _currentHealth = health;

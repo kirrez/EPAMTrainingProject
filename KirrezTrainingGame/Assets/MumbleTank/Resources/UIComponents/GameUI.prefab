@@ -2109,6 +2109,13 @@ MonoBehaviour:
   victoryScreen: {fileID: 2312788431367054977}
   victoryFront: {fileID: 2312788432076220949}
   victoryBack: {fileID: 2312788432170211853}
+  Resume_PauseButton: {fileID: 2312788432352534031}
+  Restart_PauseButton: {fileID: 2312788431922081082}
+  BackToTitle_PauseButton: {fileID: 2312788432194982673}
+  RestartGOButton: {fileID: 2312788431991970809}
+  BackToTitleGOButton: {fileID: 2312788432503625799}
+  QuitGOButton: {fileID: 2312788433009196799}
+  NextLevelButton: {fileID: 2312788431421642478}
 --- !u!114 &2312788432625622456
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : MonoBehaviour, IGameUI
 {
     private MySceneManagment sceneManager;
 
@@ -68,8 +68,8 @@ public class GameUI : MonoBehaviour
         }
 
         //debug
-        if (Input.GetKeyUp(KeyCode.G)) ShowGameOverScreen();
-        if (Input.GetKeyUp(KeyCode.V) && (!victoryScreen.activeSelf)) ShowVictoryScreen();
+        //if (Input.GetKeyUp(KeyCode.G)) ShowGameOverScreen();
+        //if (Input.GetKeyUp(KeyCode.V) && (!victoryScreen.activeSelf)) ShowVictoryScreen();
 
     }
 
