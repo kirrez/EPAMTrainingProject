@@ -4,10 +4,33 @@ public class ServiceLocator : MonoBehaviour
 {
     private static IPlayer Player;
     private static IGameUI GameUI;
+    private static IUIRoot UIRoot;
     private static IPlayerHUD PlayerHUD;
     private static IGameCamera GameCamera;
-    private static IOverlayCanvas OverlayCanvas;
+    private static IPlayerSettings PlayerSettings;
     private static IResourceManager ResourceManager;
+
+    public static IUIRoot GetUIRoot()
+    {
+        if (UIRoot == null)
+        {
+            var resourceManager = GetResourceManager();
+
+            UIRoot = resourceManager.CreatePrefab<IUIRoot, Components>(Components.UIRoot);
+        }
+
+        return UIRoot;
+    }
+
+    public static IPlayerSettings GetPlayerSettings()
+    {
+        if (PlayerSettings == null)
+        {
+            PlayerSettings = new PlayerSettings();
+        }
+
+        return PlayerSettings;
+    }
 
     public static IGameCamera GetGameCamera()
     {
@@ -57,18 +80,6 @@ public class ServiceLocator : MonoBehaviour
         return PlayerHUD;
     }
 
-    public static IOverlayCanvas GetOverlayCanvas()
-    {
-        if (OverlayCanvas == null)
-        {
-            var resourceManager = GetResourceManager();
-
-            OverlayCanvas = resourceManager.CreatePrefab<IOverlayCanvas, UIComponents>(UIComponents.OverlayCanvas);
-        }
-
-        return OverlayCanvas;
-    }
-
     public static IResourceManager GetResourceManager()
     {
         if (ResourceManager == null)
@@ -83,10 +94,10 @@ public class ServiceLocator : MonoBehaviour
     {
         ResourceManager = null;
 
+        UIRoot = null;
         Player = null;
         GameUI = null;
         PlayerHUD = null;
         GameCamera = null;
-        OverlayCanvas = null;
     }
 }

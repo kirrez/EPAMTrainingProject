@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerSettings : MonoBehaviour
+public class PlayerSettings : IPlayerSettings
 {
-    public static int UserMaxHitpoints = 3;
-    public readonly int MaxHitpointsAvailable = 7;
+    public const int MaxHitpointsAvailable = 7;
+
+    private int UserMaxHitpoints = 3;
 
     public void SetHitpoints(bool increase)
     {

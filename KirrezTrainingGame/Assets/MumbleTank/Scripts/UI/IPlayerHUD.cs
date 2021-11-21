@@ -1,4 +1,3 @@
-
 public interface IPlayerHUD
 {
     void SetMaxHP(int hp);

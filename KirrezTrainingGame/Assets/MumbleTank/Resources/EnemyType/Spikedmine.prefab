@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3909196749490389386}
   - component: {fileID: 5022286660196578345}
   - component: {fileID: 4978373792210791462}
-  - component: {fileID: 4978373792210791461}
   - component: {fileID: 4978373792210791460}
   - component: {fileID: -973525020041202206}
+  - component: {fileID: 4480706113639945925}
   m_Layer: 0
   m_Name: Spikedmine
   m_TagString: Enemy Unit
@@ -66,19 +66,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4978373792210791461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4978373792210791463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e55d2de049e0f4db689f9b568b577a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 6988385941357538044}
 --- !u!114 &4978373792210791460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +98,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Offset: {x: 0, y: 0, z: 1.5}
+--- !u!114 &4480706113639945925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4978373792210791463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4916ca3fc5e0148986f93546b5d1c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Body: {fileID: 6988385941357538044}
 --- !u!1001 &6988385941357670524
 PrefabInstance:
   m_ObjectHideFlags: 0

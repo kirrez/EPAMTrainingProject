@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3439985740262234700}
   m_Layer: 0
-  m_Name: Firepoint
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3439985740577808497}
   - component: {fileID: 3439985740577808502}
-  - component: {fileID: 3439985740577808503}
+  - component: {fileID: 5794658981510315424}
   - component: {fileID: 3439985740577808500}
   - component: {fileID: -4131813017062984451}
   m_Layer: 0
@@ -81,7 +81,7 @@ CapsuleCollider:
   m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 1.44, z: 0}
---- !u!114 &3439985740577808503
+--- !u!114 &5794658981510315424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,10 +90,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3439985740577808501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e55d2de049e0f4db689f9b568b577a, type: 3}
+  m_Script: {fileID: 11500000, guid: cc5bd58f0698f1c4caf2ca1e2d8566a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 3435522415080369221}
+  FirePoint: {fileID: 3439985740262234700}
 --- !u!114 &3439985740577808500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,9 +110,7 @@ MonoBehaviour:
   hitPoints: 100
   moveSpeed: 0
   activationRadius: 20
-  firepoint: {fileID: 3439985740262234700}
   weaponPrefab: {fileID: 5510831075705327019, guid: 06ae5c37f63650b40b1ae8a02cbf9d35, type: 3}
-  deathExplosion: {fileID: 1438714148614482237, guid: daac7e643c44ff54b9586b02315943e7, type: 3}
 --- !u!114 &-4131813017062984451
 MonoBehaviour:
   m_ObjectHideFlags: 0

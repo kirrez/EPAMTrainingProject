@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour
     {
         if ((type == BulletType.PvE_bullet) && (other.tag == "Enemy Unit"))
         {
-            Enemy target = other.GetComponent<Enemy>();
+            BaseEnemy target = other.GetComponent<BaseEnemy>();
             //Debug.Log("Hit enemy!");
             target.ReceiveDamage(_bulletDamage);
             //Effect of enemy being hit

@@ -26,10 +26,13 @@ public class Player : MonoBehaviour, IPlayer
 
     private ExplodeEffect _explodeEffect;
     private BlinkingEffect _blinkingEffect;
+
+    private IPlayerSettings _playerSettings;
     private IResourceManager _resourceManager;
 
     private void Awake()
     {
+        _playerSettings = ServiceLocator.GetPlayerSettings();
         _resourceManager = ServiceLocator.GetResourceManager();
 
         _explodeEffect = GetComponent<ExplodeEffect>();
@@ -40,7 +43,7 @@ public class Player : MonoBehaviour, IPlayer
         AddWeapon(Weapons.Cannon);
 
         // player always starts with full HP
-        maxHitpoints = GetComponent<PlayerSettings>().GetMaxHitpoints(); // gameObject with "PlayerShooting" script must also have "PlayerSettings" script on it
+        maxHitpoints = _playerSettings.GetMaxHitpoints(); // gameObject with "PlayerShooting" script must also have "PlayerSettings" script on it
         CurrentHitpoints = maxHitpoints;
 
         // _targetForEnemy = ...
@@ -78,13 +81,9 @@ public class Player : MonoBehaviour, IPlayer
 
     public void ReceiveDamage()
     {
-        //if ((PlayerAlive) && (playerHUD.Invulnerability == false))
-        //{
         CurrentHitpoints--;
 
         HealthChanged?.Invoke(CurrentHitpoints);
-
-        //playerHUD.UpdateCurrentHP(CurrentHitpoints);
 
         if (CurrentHitpoints == 0)
         {
@@ -95,13 +94,9 @@ public class Player : MonoBehaviour, IPlayer
             return;
         }
 
-        //playerHUD.ActivateInvulnerability();
-
         _blinkingEffect.StartBlinking();
         _shieldTimer = ShieldTime;
         _isShielded = true;
-
-        //}
     }
 
     private void FixedUpdate()
@@ -138,8 +133,8 @@ public class Player : MonoBehaviour, IPlayer
         return transform;
     }
 
-    public void SetStartPosition(Transform pos)
+    public void SetStartPosition(Vector3 position)
     {
-        transform.position = pos.position;
+        transform.position = position;
     }
 }

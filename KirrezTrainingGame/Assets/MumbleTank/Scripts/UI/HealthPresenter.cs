@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class HealthPresenter : MonoBehaviour
 {
+    public Vector3 Offset;
+
     private IHealth _health;
     private IHealthBar _healthBar;
     private IGameCamera _gameCamera;
-
-    public Vector3 Offset;
+    private IUIRoot _uiRoot;
 
     private void Awake()
     {
+        Debug.Log(1);
+
+        _uiRoot = ServiceLocator.GetUIRoot();
+
         var game = FindObjectOfType<Game>();
         _gameCamera = ServiceLocator.GetGameCamera();
         _health = GetComponent<IHealth>();
-
-        InitializeHealthBar();
 
         _health.HealthChanged += OnHealthChanged;
         _health.MaxHealthChanged += OnMaxHealthChanged;
@@ -22,6 +25,8 @@ public class HealthPresenter : MonoBehaviour
 
     private void OnEnable()
     {
+        InitializeHealthBar();
+
         _healthBar.Show();
     }
 
@@ -32,12 +37,14 @@ public class HealthPresenter : MonoBehaviour
 
     private void InitializeHealthBar()
     {
-        var canvas = FindObjectOfType<OverlayCanvas>();
         var prefab = Resources.Load<GameObject>("Prefabs/UI/HealthBar");
         var instance = Instantiate(prefab);
         _healthBar = instance.GetComponent<IHealthBar>();
 
-        _healthBar.SetParent(canvas.transform);
+        Debug.Log(_uiRoot);
+        Debug.Log(_uiRoot.OverlayCanvas);
+
+        _healthBar.SetParent(_uiRoot.OverlayCanvas);
         _healthBar.SetMaxHealth(_health.MaxHealth);
         _healthBar.SetHealth(_health.CurrentHealth);
 

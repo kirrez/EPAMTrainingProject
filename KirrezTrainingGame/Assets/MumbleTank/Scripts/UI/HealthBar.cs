@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : BaseView, IHealthBar
@@ -14,9 +15,15 @@ public class HealthBar : BaseView, IHealthBar
     public void SetHealth(float health)
     {
         _currentHealth = health;
-        slider.value = _currentHealth / _maxHealth;
 
-        if (_currentHealth <= 0) slider.value = 0f;
+        if (_currentHealth <= 0)
+        {
+            slider.value = 0f;
+        }
+        else
+        {
+            slider.value = _currentHealth / _maxHealth;
+        }
     }
 
     public void ResetHealth()
@@ -27,6 +34,14 @@ public class HealthBar : BaseView, IHealthBar
 
     public void SetMaxHealth(float value)
     {
+        if (value == 0f)
+        {
+            return;
+        }
+
         _maxHealth = value;
+        slider.value = _currentHealth / _maxHealth;
+
+        if (_currentHealth <= 0) slider.value = 0f;
     }
 }

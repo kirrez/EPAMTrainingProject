@@ -7,5 +7,5 @@ public interface IPlayer
     event Action Killed;
 
     Transform GetTransform();
-    void SetStartPosition(Transform pos);
+    void SetStartPosition(Vector3 pos);
 }

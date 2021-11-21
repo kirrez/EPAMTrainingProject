@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour, IGameUI
 {
-    private MySceneManagment sceneManager;
-
     public bool GamePaused { get; set; } = false;
 
     public GameObject pauseScreen;
@@ -33,14 +29,12 @@ public class GameUI : MonoBehaviour, IGameUI
 
     private void Awake()
     {
-        sceneManager = GetComponent<MySceneManagment>();
-
         Resume_PauseButton.onClick.AddListener(OnResumeClick);
         Restart_PauseButton.onClick.AddListener(OnRestartClick);
-        BackToTitle_PauseButton.onClick.AddListener(OnBackToTitleClick);
+        BackToTitle_PauseButton.onClick.AddListener(OnBackClick);
 
         RestartGOButton.onClick.AddListener(OnRestartClick);
-        BackToTitleGOButton.onClick.AddListener(OnBackToTitleClick);
+        BackToTitleGOButton.onClick.AddListener(OnBackClick);
         QuitGOButton.onClick.AddListener(OnQuitClick);
 
         NextLevelButton.onClick.AddListener(OnNextLevelClick);
@@ -112,18 +106,18 @@ public class GameUI : MonoBehaviour, IGameUI
     public void OnRestartClick()
     {
         UnpauseGame();
-        sceneManager.RestartLevel();
+        //sceneManager.RestartLevel();
     }
 
-    public void OnBackToTitleClick()
+    public void OnBackClick()
     {
         UnpauseGame();
-        sceneManager.ReturnToMenu();
+        //sceneManager.ReturnToMenu();
     }
 
     public void OnQuitClick()
     {
-        sceneManager.ExitGame();
+        //sceneManager.ExitGame();
     }
 
     public void OnNextLevelClick()

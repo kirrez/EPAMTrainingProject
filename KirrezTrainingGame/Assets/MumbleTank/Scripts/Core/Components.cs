@@ -1,5 +1,6 @@
 public enum Components
 {
     GameCamera,
-    Player
+    Player,
+    UIRoot
 }
