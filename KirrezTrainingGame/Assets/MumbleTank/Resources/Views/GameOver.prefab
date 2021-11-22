@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 8967664777092259054}
   - component: {fileID: 8967664777092259041}
   m_Layer: 5
-  m_Name: RestartLevel
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 8967664777119365604}
   - component: {fileID: 8967664777119365607}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -616,6 +616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8967664777528633052}
   - component: {fileID: 8967664777528633055}
+  - component: {fileID: 7603384725256249552}
   - component: {fileID: 8967664777528633054}
   m_Layer: 5
   m_Name: GameOver
@@ -655,6 +656,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8967664777528633041}
   m_CullTransparentMesh: 1
+--- !u!114 &7603384725256249552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967664777528633041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13122119f1bf896409577070bfbe7d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RestartButton: {fileID: 8967664777092259041}
+  BackButton: {fileID: 8967664777620660063}
+  QuitButton: {fileID: 8967664777119365607}
 --- !u!114 &8967664777528633054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,7 +714,7 @@ GameObject:
   - component: {fileID: 8967664777620660060}
   - component: {fileID: 8967664777620660063}
   m_Layer: 5
-  m_Name: BackToTitle
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

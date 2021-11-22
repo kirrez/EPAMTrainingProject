@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 1960628276734741797}
   - component: {fileID: 1960628276734741796}
   m_Layer: 5
-  m_Name: AddLivesButton
+  m_Name: DecreaseLivesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 1960628277139437566}
   - component: {fileID: 1960628277139437441}
   m_Layer: 5
-  m_Name: DecreaseLivesButton
+  m_Name: AddLivesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -667,8 +667,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ce317654954cc4b928c84f03afd074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AddLivesButton: {fileID: 1960628276734741796}
-  DecreaseLivesButton: {fileID: 1960628277139437441}
+  AddLivesButton: {fileID: 1960628277139437441}
+  DecreaseLivesButton: {fileID: 1960628276734741796}
   BackToMenuButton: {fileID: 1960628278003019270}
   LivesAmountText: {fileID: 1960628277992299316}
 --- !u!1 &1960628277514863644
@@ -1018,6 +1018,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

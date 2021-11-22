@@ -11,7 +11,7 @@ public class MenuScene : MonoBehaviour
     private float distance = 0f;
     private float startYposition = 0f;
     private Color fadeColor;
-    private MySceneManagment sceneManager;
+    //private MySceneManagment sceneManager;
 
     //public Image fade;
     //public RectTransform splashScreen;

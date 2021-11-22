@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 6080037668131450920}
   - component: {fileID: 6080037668131450921}
   m_Layer: 5
-  m_Name: RestartLevel
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 6080037668387573309}
   - component: {fileID: 6080037668387573250}
   m_Layer: 5
-  m_Name: BackToTitle
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,6 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6080037668407326496}
   - component: {fileID: 6080037668407326498}
+  - component: {fileID: -2572402698921344108}
   - component: {fileID: 6080037668407326499}
   m_Layer: 5
   m_Name: Pause
@@ -690,6 +691,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6080037668407326497}
   m_CullTransparentMesh: 1
+--- !u!114 &-2572402698921344108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080037668407326497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20b3c013ef2b89c458bf9100c2af4a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResumeButton: {fileID: 6080037668830331676}
+  RestartButton: {fileID: 6080037668131450921}
+  BackButton: {fileID: 6080037668387573250}
 --- !u!114 &6080037668407326499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,7 +824,7 @@ GameObject:
   - component: {fileID: 6080037668830331679}
   - component: {fileID: 6080037668830331676}
   m_Layer: 5
-  m_Name: Resume
+  m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
