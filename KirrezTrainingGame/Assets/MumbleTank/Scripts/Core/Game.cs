@@ -4,13 +4,9 @@ public class Game : MonoBehaviour
 {
     public Transform StartPosition;
 
-    private IGameCamera _gameCamera;
-    private IPlayerHUD _playerHUD; // 2nd iteration, must be refactored
     private IPlayer _player;
-    //private IGameUI _gameUI; // 2nd iteration (out of date)
-
-    //3rd iteration, up to date
     private IPauseMenu _pauseMenu;
+    private IGameCamera _gameCamera;
     private IVictoryMenu _victoryMenu;
     private IGameOverMenu _gameOverMenu;
 
@@ -18,28 +14,18 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
+        var gameHUD = new GameHUD();
         _pauseMenu = new PauseMenu();
         _victoryMenu = new VictoryMenu();
         _gameOverMenu = new GameOverMenu();
 
         _player = ServiceLocator.GetPlayer();
-        _playerHUD = ServiceLocator.GetPlayerHUD(); // !
         _gameCamera = ServiceLocator.GetGameCamera();
         var playerSettings = ServiceLocator.GetPlayerSettings();
 
-        var hitPoints = playerSettings.GetMaxHitpoints();
-
-        _playerHUD.SetMaxHP(hitPoints);
-
-        _player.HealthChanged += OnPlayerHealthChanged;
         _player.Killed += OnPlayerKilled;
 
         _player.SetStartPosition(StartPosition.position);
-    }
-
-    private void OnPlayerHealthChanged(int value)
-    {
-        _playerHUD.UpdateCurrentHP(value);
     }
 
     private void OnPlayerKilled()

@@ -5,5 +5,6 @@ public enum Views
     Pause,
     GameOver,
     Victory,
+    GameHUD,
     AnimatedBackground
 }

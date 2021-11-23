@@ -1,17 +1,8 @@
 public class PlayerSettings : IPlayerSettings
 {
-    public const int MaxHitpointsAvailable = 7;
+    public int MaxHealth { get { return 7; } }
+    public int MinHealth { get { return 1; } }
 
-    private int UserMaxHitpoints = 3;
-
-    public void SetHitpoints(bool increase)
-    {
-        if ((increase) && (UserMaxHitpoints < MaxHitpointsAvailable)) UserMaxHitpoints++;
-        if ((!increase) && (UserMaxHitpoints > 1)) UserMaxHitpoints--;
-    }
-
-    public int GetMaxHitpoints()
-    {
-        return UserMaxHitpoints;
-    }
+    public int StartHealth { get; set; } = 3;
+    public float ShieldTime { get { return 1.5f; } }
 }

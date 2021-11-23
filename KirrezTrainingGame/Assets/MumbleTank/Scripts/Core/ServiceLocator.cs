@@ -3,9 +3,7 @@ using UnityEngine;
 public class ServiceLocator : MonoBehaviour
 {
     private static IPlayer Player;
-    private static IGameUI GameUI;
     private static IUIRoot UIRoot;
-    private static IPlayerHUD PlayerHUD;
     private static IGameCamera GameCamera;
     private static IPlayerSettings PlayerSettings;
     private static IResourceManager ResourceManager;
@@ -56,30 +54,6 @@ public class ServiceLocator : MonoBehaviour
         return Player;
     }
 
-    public static IGameUI GatGameUI()
-    {
-        if (GameUI == null)
-        {
-            var resourceManager = GetResourceManager();
-
-            GameUI = resourceManager.CreatePrefab<IGameUI, UIComponents>(UIComponents.GameUI);
-        }
-
-        return GameUI;
-    }
-
-    public static IPlayerHUD GetPlayerHUD()
-    {
-        if (PlayerHUD == null)
-        {
-            var resourceManager = GetResourceManager();
-
-            PlayerHUD = resourceManager.CreatePrefab<IPlayerHUD, UIComponents>(UIComponents.PlayerHUD);
-        }
-
-        return PlayerHUD;
-    }
-
     public static IResourceManager GetResourceManager()
     {
         if (ResourceManager == null)
@@ -96,8 +70,6 @@ public class ServiceLocator : MonoBehaviour
 
         UIRoot = null;
         Player = null;
-        GameUI = null;
-        PlayerHUD = null;
         GameCamera = null;
     }
 }

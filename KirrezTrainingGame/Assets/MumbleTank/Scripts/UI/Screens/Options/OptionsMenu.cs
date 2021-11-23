@@ -20,6 +20,8 @@ public class OptionsMenu : IOptionsMenu
         _view.BackClicked += OnBackClicked;
         _view.AddLivesClicked += OnAddLivesClicked;
         _view.DecreaseLivesClicked += OnDecreaseLivesClicked;
+
+        _view.SetHealth(_playerSettings.StartHealth);
     }
 
     private void OnBackClicked()
@@ -29,18 +31,20 @@ public class OptionsMenu : IOptionsMenu
 
     private void OnDecreaseLivesClicked()
     {
-        _playerSettings.SetHitpoints(false);
+        var health = _playerSettings.StartHealth - 1;
+        health = Mathf.Clamp(health, _playerSettings.MinHealth, _playerSettings.MaxHealth);
 
-        var maxHitpoints = _playerSettings.GetMaxHitpoints();
-        _view.SetLivesAmount(maxHitpoints);
+        _playerSettings.StartHealth = health;
+        _view.SetHealth(health);
     }
 
     private void OnAddLivesClicked()
     {
-        _playerSettings.SetHitpoints(true);
+        var health = _playerSettings.StartHealth + 1;
+        health = Mathf.Clamp(health, _playerSettings.MinHealth, _playerSettings.MaxHealth);
 
-        var maxHitpoints = _playerSettings.GetMaxHitpoints();
-        _view.SetLivesAmount(maxHitpoints);
+        _playerSettings.StartHealth = health;
+        _view.SetHealth(health);
     }
 
     public void Show()

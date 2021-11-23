@@ -6,5 +6,5 @@ public interface IOptionsMenuView : IView
     event Action DecreaseLivesClicked;
     event Action BackClicked;
 
-    void SetLivesAmount(int value);
+    void SetHealth(int value);
 }

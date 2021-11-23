@@ -35,7 +35,7 @@ public class OptionsMenuView : BaseView, IOptionsMenuView
         BackClicked();
     }
 
-    public void SetLivesAmount(int value)
+    public void SetHealth(int value)
     {
         LivesAmountText.text = value.ToString();
     }

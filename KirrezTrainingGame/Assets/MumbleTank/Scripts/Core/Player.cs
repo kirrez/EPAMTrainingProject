@@ -6,14 +6,18 @@ using UnityEngine;
 public class Player : MonoBehaviour, IPlayer
 {
     public event Action<int> HealthChanged;
+    public event Action<int> MaxHealthChanged;
+
+    public event Action<bool> ShieldChanged;
+    public event Action<float> ShieldProgress;
+
     public event Action Killed;
 
     public bool PlayerAlive { get; set; } = true;
-    public int CurrentHitpoints { get; set; }
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
 
     public Transform firePoint;
-    public int maxHitpoints = 3;
-    public float ShieldTime = 1.5f; // time before player can be damaged again
 
     private bool _isShielded;
     private float _shieldTimer = 0;
@@ -41,18 +45,16 @@ public class Player : MonoBehaviour, IPlayer
         AddWeapon(Weapons.Machinegun);
         AddWeapon(Weapons.Spray);
         AddWeapon(Weapons.Cannon);
-
-        // player always starts with full HP
-        maxHitpoints = _playerSettings.GetMaxHitpoints(); // gameObject with "PlayerShooting" script must also have "PlayerSettings" script on it
-        CurrentHitpoints = maxHitpoints;
-
-        // _targetForEnemy = ...
     }
 
     private void Start()
     {
-        //playerHUD.SetMaxHP(maxHitpoints);
-        //playerHUD.SetInvulnerabilityPeriod(invulnerabilityPeriod);
+        Health = _playerSettings.StartHealth;
+        MaxHealth = _playerSettings.StartHealth;
+
+        HealthChanged?.Invoke(Health);
+        MaxHealthChanged?.Invoke(MaxHealth);
+        ShieldChanged.Invoke(false);
     }
 
     private void Update()
@@ -81,11 +83,16 @@ public class Player : MonoBehaviour, IPlayer
 
     public void ReceiveDamage()
     {
-        CurrentHitpoints--;
+        if (_isShielded == true)
+        {
+            return;
+        }
 
-        HealthChanged?.Invoke(CurrentHitpoints);
+        Health--;
 
-        if (CurrentHitpoints == 0)
+        HealthChanged?.Invoke(Health);
+
+        if (Health == 0)
         {
             _explodeEffect.Explode();
             PlayerAlive = false;
@@ -95,8 +102,10 @@ public class Player : MonoBehaviour, IPlayer
         }
 
         _blinkingEffect.StartBlinking();
-        _shieldTimer = ShieldTime;
+        _shieldTimer = _playerSettings.ShieldTime;
         _isShielded = true;
+
+        ShieldChanged?.Invoke(true);
     }
 
     private void FixedUpdate()
@@ -115,6 +124,14 @@ public class Player : MonoBehaviour, IPlayer
         {
             _blinkingEffect.StopBlinking();
             _isShielded = false;
+
+            ShieldChanged?.Invoke(false);
+        }
+        else
+        {
+            var progress = _shieldTimer / _playerSettings.ShieldTime;
+
+            ShieldProgress?.Invoke(progress);
         }
     }
 

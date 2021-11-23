@@ -1,5 +1,8 @@
 public interface IPlayerSettings
 {
-    void SetHitpoints(bool increase);
-    int GetMaxHitpoints();
+    int MaxHealth { get; }
+    int MinHealth { get; }
+
+    int StartHealth { get; set; }
+    float ShieldTime { get; }
 }
