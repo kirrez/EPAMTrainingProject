@@ -45,6 +45,7 @@ public class Player : MonoBehaviour, IPlayer
         AddWeapon(Weapons.Machinegun);
         AddWeapon(Weapons.Spray);
         AddWeapon(Weapons.Cannon);
+
     }
 
     private void Start()
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour, IPlayer
         HealthChanged?.Invoke(Health);
         MaxHealthChanged?.Invoke(MaxHealth);
         ShieldChanged.Invoke(false);
+
     }
 
     private void Update()
@@ -67,12 +69,6 @@ public class Player : MonoBehaviour, IPlayer
             if (Input.GetKey(KeyCode.Alpha3) && _weaponsList.Count >= 3) _weaponIndex = 2;
             if (Input.GetKey(KeyCode.Alpha4) && _weaponsList.Count >= 4) _weaponIndex = 3;
             if (Input.GetKey(KeyCode.Alpha5) && _weaponsList.Count >= 5) _weaponIndex = 4;
-
-            //debug
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                ReceiveDamage();
-            }
 
             if (Input.GetButton("Fire1"))
             {

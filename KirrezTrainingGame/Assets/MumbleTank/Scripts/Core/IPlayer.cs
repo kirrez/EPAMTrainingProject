@@ -8,6 +8,7 @@ public interface IPlayer
 
     event Action<bool> ShieldChanged;
     event Action<float> ShieldProgress;
+
     event Action Killed;
 
     int Health { get; }

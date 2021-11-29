@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2193359356975753919}
   - component: {fileID: 4724394604316275}
   - component: {fileID: 2193359356975753917}
-  - component: {fileID: 2193359356975753916}
   - component: {fileID: 5889155307849452512}
   - component: {fileID: -7353476727278118583}
+  - component: {fileID: 6186836393783344732}
   m_Layer: 0
   m_Name: Flyer
   m_TagString: Enemy Unit
@@ -66,20 +66,8 @@ MonoBehaviour:
   hitPoints: 150
   moveSpeed: 6
   activationRadius: 30
+  Score: 25
   weaponPrefab: {fileID: 5510831075705327019, guid: e2574915f41dabd4d8b8ada678f3a902, type: 3}
---- !u!65 &2193359356975753916
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2193359356975753915}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 2, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &5889155307849452512
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -108,7 +96,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c601eb626c0eed49bd484d6a743c978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Offset: {x: 0, y: 0, z: 1.5}
+  Offset: {x: 0, y: 0, z: 1.41}
+--- !u!136 &6186836393783344732
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193359356975753915}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.75
+  m_Height: 3.27
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.75, z: 0.05}
 --- !u!1 &2193359357062949373
 GameObject:
   m_ObjectHideFlags: 0

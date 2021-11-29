@@ -8,14 +8,7 @@ public class EnemyProperties : MonoBehaviour
     public float hitPoints;
     public float moveSpeed;
     public float activationRadius;
+    public int score;
 
-    //public Transform firepoint;
     public Weapon weaponPrefab;
-    //public GameObject deathExplosion;
-    //public GameObject firepoint;
-
-    //public void SetHitPoints(out float hp)
-    //{
-    //    hp = hitPoints;
-    //}
 }

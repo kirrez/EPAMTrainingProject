@@ -11,7 +11,7 @@ public class GameHUDView : BaseView, IGameHUDView
     public Transform HealthContent;
     private List<IHealthItem> HealthItems = new List<IHealthItem>();
 
-    private int _currentHP = 0;
+    //private int _currentHP = 0;
 
     private IResourceManager _resourceManager;
 

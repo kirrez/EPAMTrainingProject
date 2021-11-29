@@ -1,4 +1,5 @@
 public enum Widgets
 {
-    HealthItem
+    HealthItem,
+    HealthBar
 }

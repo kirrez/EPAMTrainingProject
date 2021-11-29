@@ -82,9 +82,8 @@ MonoBehaviour:
   hitPoints: 75
   moveSpeed: 5
   activationRadius: 22
-  firepoint: {fileID: 0}
+  Score: 10
   weaponPrefab: {fileID: 0}
-  deathExplosion: {fileID: 1438714148614482237, guid: daac7e643c44ff54b9586b02315943e7, type: 3}
 --- !u!114 &-973525020041202206
 MonoBehaviour:
   m_ObjectHideFlags: 0

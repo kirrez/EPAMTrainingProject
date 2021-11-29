@@ -7,4 +7,8 @@ public interface IEnemy
 
     Vector3 Position { get; set; }
     Quaternion Rotation { get; set; }
+
+    int GetScore();
+    bool IsEnabled();
+    void Enable();
 }

@@ -58,7 +58,8 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
     protected EnemyProperties _unitData;
 
     protected Vector3 _startPosition;
-    
+
+    private int _score = 0;
     private float _moveSpeed = 8f;
     private float _maxHitPoints = 0f;
     private float _currentHitPoints = 0f;
@@ -130,6 +131,7 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
     {
         Type = _unitData.type;
 
+        _score = _unitData.score;
         _maxHitPoints = _unitData.hitPoints;
         _currentHitPoints = _maxHitPoints;
         _moveSpeed = _unitData.moveSpeed;
@@ -147,11 +149,9 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
             return false;
         }
 
-        // "normal == false" for Spikedmines and their CloseContact state
         var distance = transform.position - _target.position;
+
         if (distance.magnitude <= _activationRadius * k) return true;
-        // 5 - magic number for acceleration
-        //if (!normal && distance.magnitude <= 5) return true;
         else return false;
     }
 
@@ -176,5 +176,20 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
             Destroy(explosion, 1f);
         }
         gameObject.SetActive(false);
+    }
+
+    public int GetScore()
+    {
+        return _score;
+    }
+
+    public bool IsEnabled()
+    {
+        return gameObject.activeSelf;
+    }
+
+    public void Enable()
+    {
+        gameObject.SetActive(true);
     }
 }

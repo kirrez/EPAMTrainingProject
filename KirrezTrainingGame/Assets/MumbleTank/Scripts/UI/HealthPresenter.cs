@@ -12,12 +12,15 @@ public class HealthPresenter : MonoBehaviour
     private void Awake()
     {
         _uiRoot = ServiceLocator.GetUIRoot();
-
         _gameCamera = ServiceLocator.GetGameCamera();
-        _health = GetComponent<IHealth>();
+        var resourceManager = ServiceLocator.GetResourceManager();
 
+        _health = GetComponent<IHealth>();
         _health.HealthChanged += OnHealthChanged;
         _health.MaxHealthChanged += OnMaxHealthChanged;
+
+        _healthBar = resourceManager.CreatePrefab<IHealthBar, Widgets>(Widgets.HealthBar);
+        _healthBar.SetParent(_uiRoot.OverlayCanvas);
     }
 
     private void OnEnable()
@@ -34,12 +37,6 @@ public class HealthPresenter : MonoBehaviour
 
     private void InitializeHealthBar()
     {
-        //TODO: to resource manager
-        var prefab = Resources.Load<GameObject>("Prefabs/UI/HealthBar");
-        var instance = Instantiate(prefab);
-        _healthBar = instance.GetComponent<IHealthBar>();
-
-        _healthBar.SetParent(_uiRoot.OverlayCanvas);
         _healthBar.SetMaxHealth(_health.MaxHealth);
         _healthBar.SetHealth(_health.CurrentHealth);
 

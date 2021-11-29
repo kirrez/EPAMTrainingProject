@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public event Action<IEnemy> EnemySpawned = enemy => { };
-
     public EnemyType Type;
     public Transform Boundary;
 
@@ -23,10 +21,12 @@ public class EnemySpawner : MonoBehaviour
     private List<IEnemy> _enemies = new List<IEnemy>();
 
     private IResourceManager _resourceManager;
+    private IUnitRepository _unitRepository;
 
     private void Awake()
     {
         _resourceManager = ServiceLocator.GetResourceManager();
+        _unitRepository = ServiceLocator.GetUnitRepository();
 
         _positionX = Boundary.position.x;
         _positionZ = Boundary.position.z;
@@ -36,36 +36,56 @@ public class EnemySpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_currentTime <= 0 && _enemies.Count < MaxEnemies)
+        if (_currentTime <= 0)
         {
+            AddNewEnemy();
+            CallExistingEnemy();
             _currentTime = SpawnPeriod;
-            var newX = _positionX + UnityEngine.Random.Range(-_scaleX, _scaleX);
-            var newZ = _positionZ + UnityEngine.Random.Range(-_scaleZ, _scaleZ);
-            var newY = BaseEnemy.CorrectYPosition(Type);
-            // adding new enemy to scene if not reached their maximum
-            AddEnemy(newX, newY, newZ);
         }
-        else
+
+        _currentTime -= Time.fixedDeltaTime;
+    }
+
+    private void CallExistingEnemy()
+    {
+        if (_enemies.Count >= MaxEnemies)
         {
-            _currentTime -= Time.fixedDeltaTime;
+            foreach (var enemy in _enemies)
+            {
+                if (enemy.IsEnabled() == false)
+                {
+                    enemy.Enable();
+                    _unitRepository.Register(enemy);
+                    return;
+                }
+            }
         }
     }
 
-    private void AddEnemy(float X, float Y, float Z)
+    private void AddNewEnemy()
     {
-        var enemy = _resourceManager.CreatePrefab<IEnemy, EnemyType>(Type);
-        enemy.Position = new Vector3(X, Y, Z);
-        enemy.Rotation = Quaternion.identity;
+        if (_enemies.Count < MaxEnemies)
+        {
+            var newX = _positionX + UnityEngine.Random.Range(-_scaleX, _scaleX);
+            var newZ = _positionZ + UnityEngine.Random.Range(-_scaleZ, _scaleZ);
+            var newY = BaseEnemy.CorrectYPosition(Type);
 
-        _enemies.Add(enemy);
+            var enemy = _resourceManager.CreatePrefab<IEnemy, EnemyType>(Type);
+            enemy.Position = new Vector3(newX, newY, newZ);
+            enemy.Rotation = Quaternion.identity;
 
-        EnemySpawned(enemy);
-        enemy.Died += OnEnemyDied;
+            _enemies.Add(enemy);
+
+            enemy.Died += OnEnemyDied;
+
+            _unitRepository.Register(enemy);
+        }
     }
 
     private void OnEnemyDied(IEnemy enemy)
     {
         enemy.Died -= OnEnemyDied;
         _killedEnemiesNumber++;
+        _unitRepository.Unregister(enemy);
     }
 }

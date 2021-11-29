@@ -3,14 +3,15 @@ using UnityEngine.UI;
 
 public class MenuScene : MonoBehaviour
 {
-    public float SplashMovementPeriod = 4f;
-    public float FadePeriod = 2.5f;
-    private float _splashOffset = 1200f;
-    private float _currentTime = 0f;
-    private float _currentFadeTime = 0f;
-    private float distance = 0f;
-    private float startYposition = 0f;
-    private Color fadeColor;
+    //public float SplashMovementPeriod = 4f;
+    //public float FadePeriod = 2.5f;
+    //private float _splashOffset = 1200f;
+    //private float _currentTime = 0f;
+    //private float _currentFadeTime = 0f;
+    //private float distance = 0f;
+    //private float startYposition = 0f;
+    //private Color fadeColor;
+
     //private MySceneManagment sceneManager;
 
     //public Image fade;

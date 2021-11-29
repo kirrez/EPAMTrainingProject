@@ -1,6 +1,10 @@
 public enum Components
 {
-    GameCamera,
+    Game,
     Player,
-    UIRoot
+    UIRoot,
+    GameCamera,
+    UnitRepository,
+    LightContainer,
+    EventSystemContainer
 }
