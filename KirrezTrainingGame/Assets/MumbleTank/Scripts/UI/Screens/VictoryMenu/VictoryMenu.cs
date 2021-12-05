@@ -1,9 +1,11 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class VictoryMenu : IVictoryMenu
 {
+    public event Action Proceeding = () => { };
+
     private IVictoryMenuView _view;
 
     public VictoryMenu()
@@ -14,8 +16,13 @@ public class VictoryMenu : IVictoryMenu
         _view = resourceManager.CreatePrefab<IVictoryMenuView, Views>(Views.Victory);
         _view.SetParent(uiRoot.MenuCanvas);
 
-        _view.ResumeClicked += OnResumeClicked;
         _view.NextLevelClicked += OnNextLevelClicked;
+    }
+
+    private void OnNextLevelClicked()
+    {
+        Proceeding.Invoke();
+        Hide();
     }
 
     public void Show()
@@ -28,14 +35,4 @@ public class VictoryMenu : IVictoryMenu
         _view.Hide();
     }
 
-    private void OnResumeClicked()
-    {
-        Hide();
-    }
-
-    private void OnNextLevelClicked()
-    {
-        // no functionality right now
-        Hide();
-    }
 }

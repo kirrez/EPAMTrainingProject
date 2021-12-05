@@ -6,12 +6,6 @@ using UnityEngine.SceneManagement;
 public class MySceneManagment : MonoBehaviour
 {
     private static Scenes _menuScene = Scenes.Menu;
-    private static Scenes _startGameScene = Scenes.Level_1;
-
-    public void StartNewGame()
-    {
-        SceneManager.LoadScene(_startGameScene.ToString());
-    }
 
     public void RestartLevel()
     {

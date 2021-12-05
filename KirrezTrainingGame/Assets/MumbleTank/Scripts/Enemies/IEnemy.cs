@@ -11,4 +11,5 @@ public interface IEnemy
     int GetScore();
     bool IsEnabled();
     void Enable();
+    void DiscardTarget();
 }

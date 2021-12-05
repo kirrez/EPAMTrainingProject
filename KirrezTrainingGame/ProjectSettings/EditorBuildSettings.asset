@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MumbleTank/Scenes/Level_1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/MumbleTank/Scenes/Level_2.unity
+    guid: 1e57450b6c6bec945af67160b8bb82b8
+  - enabled: 1
+    path: Assets/MumbleTank/Scenes/Level_3.unity
+    guid: 66e55982867b2c74fb0818399b0bfabd
   m_configObjects: {}

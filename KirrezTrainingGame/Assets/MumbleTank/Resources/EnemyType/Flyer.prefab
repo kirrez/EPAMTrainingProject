@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FirePoint: {fileID: 2193359357062949374}
+  ExplosionPrefab: {fileID: 1438714148614482237, guid: daac7e643c44ff54b9586b02315943e7, type: 3}
 --- !u!114 &2193359356975753917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ MonoBehaviour:
   hitPoints: 150
   moveSpeed: 6
   activationRadius: 30
-  Score: 25
+  score: 0
   weaponPrefab: {fileID: 5510831075705327019, guid: e2574915f41dabd4d8b8ada678f3a902, type: 3}
 --- !u!54 &5889155307849452512
 Rigidbody:

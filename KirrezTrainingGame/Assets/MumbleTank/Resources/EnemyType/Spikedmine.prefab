@@ -82,7 +82,7 @@ MonoBehaviour:
   hitPoints: 75
   moveSpeed: 5
   activationRadius: 22
-  Score: 10
+  score: 0
   weaponPrefab: {fileID: 0}
 --- !u!114 &-973525020041202206
 MonoBehaviour:
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4916ca3fc5e0148986f93546b5d1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExplosionPrefab: {fileID: 1438714148614482237, guid: daac7e643c44ff54b9586b02315943e7, type: 3}
   Body: {fileID: 6988385941357538044}
 --- !u!1001 &6988385941357670524
 PrefabInstance:

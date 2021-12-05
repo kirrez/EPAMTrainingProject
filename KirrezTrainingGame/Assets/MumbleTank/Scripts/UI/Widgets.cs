@@ -1,5 +1,6 @@
 public enum Widgets
 {
     HealthItem,
-    HealthBar
+    HealthBar,
+    KillTaskView
 }

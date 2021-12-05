@@ -7,20 +7,20 @@ public class HealthPresenter : MonoBehaviour
     private IHealth _health;
     private IHealthBar _healthBar;
     private IGameCamera _gameCamera;
-    private IUIRoot _uiRoot;
+    //private IUIRoot _uiRoot;
 
     private void Awake()
     {
-        _uiRoot = ServiceLocator.GetUIRoot();
-        _gameCamera = ServiceLocator.GetGameCamera();
+        var uiRoot = ServiceLocator.GetUIRoot();
         var resourceManager = ServiceLocator.GetResourceManager();
+        _gameCamera = ServiceLocator.GetGameCamera();
 
         _health = GetComponent<IHealth>();
         _health.HealthChanged += OnHealthChanged;
         _health.MaxHealthChanged += OnMaxHealthChanged;
 
         _healthBar = resourceManager.CreatePrefab<IHealthBar, Widgets>(Widgets.HealthBar);
-        _healthBar.SetParent(_uiRoot.OverlayCanvas);
+        _healthBar.SetParent(uiRoot.OverlayCanvas);
     }
 
     private void OnEnable()

@@ -19,6 +19,11 @@ public class Flyer : BaseEnemy
         Activated
     }
 
+    private void OnEnable()
+    {
+        _currentState = States.Idle;
+    }
+
     private void FixedUpdate()
     {
         if (_currentState == States.Idle)

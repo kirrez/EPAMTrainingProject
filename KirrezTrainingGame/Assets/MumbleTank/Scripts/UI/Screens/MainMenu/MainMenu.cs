@@ -9,6 +9,7 @@ public class MainMenu : IMainMenu
     public MainMenu()
     {
         var uiRoot = ServiceLocator.GetUIRoot();
+        var eventSystem = ServiceLocator.GetEventSystem();
         var resourceManager = ServiceLocator.GetResourceManager();
 
         _view = resourceManager.CreatePrefab<IMainMenuView, Views>(Views.MainMenu);
@@ -53,6 +54,6 @@ public class MainMenu : IMainMenu
 
     private void OnStartGameClicked()
     {
-        SceneManager.LoadScene(Scenes.Level_1.ToString());
+        SceneManager.LoadScene(Levels.Level_1.ToString());
     }
 }

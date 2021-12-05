@@ -8,12 +8,10 @@ public class UnitRepository : MonoBehaviour, IUnitRepository
     public event Action<IEnemy> Killed = enemy => { };
 
     private List<IEnemy> _enemiesList = new List<IEnemy>();
-    // for debug
-    private int _killedAmount = 0;
 
     private void Awake()
     {
-        Killed += Onkilled;
+
     }
 
     public void Register(IEnemy enemy)
@@ -27,10 +25,11 @@ public class UnitRepository : MonoBehaviour, IUnitRepository
         Killed.Invoke(enemy);
     }
 
-    // debug
-    private void Onkilled(IEnemy enemy)
+    public void StopChasingPlayer()
     {
-        _killedAmount++;
-        Debug.Log($"Enemies killed : {_killedAmount}");
+        foreach( IEnemy enemy in _enemiesList)
+        {
+            enemy.DiscardTarget();
+        }
     }
 }

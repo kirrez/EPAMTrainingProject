@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform Boundary;
 
     public int MaxEnemies;
+    public bool CanRespawn = true;
     public float SpawnPeriod = 2f;
 
     private float _currentTime = 0f;
@@ -17,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     private float _scaleX; // 1/2 of X scale
     private float _scaleZ; // 1/2 of Z scale
 
-    private int _killedEnemiesNumber;
+    //private int _killedEnemiesNumber;
     private List<IEnemy> _enemies = new List<IEnemy>();
 
     private IResourceManager _resourceManager;
@@ -39,7 +40,10 @@ public class EnemySpawner : MonoBehaviour
         if (_currentTime <= 0)
         {
             AddNewEnemy();
-            CallExistingEnemy();
+            if (CanRespawn == true)
+            {
+                CallExistingEnemy();
+            }
             _currentTime = SpawnPeriod;
         }
 
@@ -55,6 +59,9 @@ public class EnemySpawner : MonoBehaviour
                 if (enemy.IsEnabled() == false)
                 {
                     enemy.Enable();
+                    enemy.Position = SetNewPosition();
+                    enemy.Rotation = Quaternion.identity;
+                    enemy.Died += OnEnemyDied;
                     _unitRepository.Register(enemy);
                     return;
                 }
@@ -66,12 +73,8 @@ public class EnemySpawner : MonoBehaviour
     {
         if (_enemies.Count < MaxEnemies)
         {
-            var newX = _positionX + UnityEngine.Random.Range(-_scaleX, _scaleX);
-            var newZ = _positionZ + UnityEngine.Random.Range(-_scaleZ, _scaleZ);
-            var newY = BaseEnemy.CorrectYPosition(Type);
-
             var enemy = _resourceManager.CreatePrefab<IEnemy, EnemyType>(Type);
-            enemy.Position = new Vector3(newX, newY, newZ);
+            enemy.Position = SetNewPosition();
             enemy.Rotation = Quaternion.identity;
 
             _enemies.Add(enemy);
@@ -82,10 +85,20 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private Vector3 SetNewPosition()
+    {
+        var newX = _positionX + UnityEngine.Random.Range(-_scaleX, _scaleX);
+        var newZ = _positionZ + UnityEngine.Random.Range(-_scaleZ, _scaleZ);
+        var newY = BaseEnemy.CorrectYPosition(Type);
+        var newPosition = new Vector3(newX, newY, newZ);
+
+        return newPosition;
+    }
+
     private void OnEnemyDied(IEnemy enemy)
     {
         enemy.Died -= OnEnemyDied;
-        _killedEnemiesNumber++;
+        //_killedEnemiesNumber++;
         _unitRepository.Unregister(enemy);
     }
 }

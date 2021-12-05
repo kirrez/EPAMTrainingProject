@@ -14,7 +14,7 @@ public class Spikedmine : BaseEnemy
     private States _currentState;
     private Quaternion startRotation = Quaternion.AngleAxis(1f, Vector3.up);
 
-    private void Start()
+    private void OnEnable()
     {
         _currentState = States.Idle;
     }

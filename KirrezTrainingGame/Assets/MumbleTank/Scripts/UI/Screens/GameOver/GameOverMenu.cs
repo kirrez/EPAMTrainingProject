@@ -1,9 +1,12 @@
-
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameOverMenu : IGameOverMenu
 {
+    public event Action Restarting = () => { };
+    public event Action Backing = () => { };
+    public event Action Quitting = () => { };
+
     private IGameOverMenuView _view;
 
     public GameOverMenu()
@@ -19,6 +22,22 @@ public class GameOverMenu : IGameOverMenu
         _view.QuitClicked += OnQuitClicked;
     }
 
+
+    private void OnRestartClicked()
+    {
+        Restarting.Invoke();
+    }
+
+    private void OnBackClicked()
+    {
+        Backing.Invoke();
+    }
+
+    private void OnQuitClicked()
+    {
+        Quitting.Invoke();
+    }
+
     public void Show()
     {
         _view.Show();
@@ -27,21 +46,5 @@ public class GameOverMenu : IGameOverMenu
     public void Hide()
     {
         _view.Hide();
-    }
-
-    private void OnRestartClicked()
-    {
-        var sceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName);
-    }
-
-    private void OnBackClicked()
-    {
-        SceneManager.LoadScene(Scenes.Menu.ToString());
-    }
-
-    private void OnQuitClicked()
-    {
-        Application.Quit();
     }
 }

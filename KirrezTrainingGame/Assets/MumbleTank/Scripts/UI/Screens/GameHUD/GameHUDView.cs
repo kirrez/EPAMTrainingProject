@@ -7,17 +7,33 @@ public class GameHUDView : BaseView, IGameHUDView
     public Image TankNormalIcon;
     public Image TankDamagedIcon;
     public Image ShieldProgress;
+    public Text TaskDescription;
 
     public Transform HealthContent;
     private List<IHealthItem> HealthItems = new List<IHealthItem>();
-
-    //private int _currentHP = 0;
 
     private IResourceManager _resourceManager;
 
     private void Awake()
     {
         _resourceManager = ServiceLocator.GetResourceManager();
+    }
+
+    public void SetTaskDescription(string description)
+    {
+        TaskDescription.text = description;
+    }
+
+    public void SetTaskDescription(string description, float value)
+    {
+        var output = string.Format(description, value);
+        TaskDescription.text = output;
+    }
+
+    public void SetTaskDescription(string description, int current, int maximum)
+    {
+        var output = string.Format(description, current, maximum);
+        TaskDescription.text = output;
     }
 
     public void SetShieldActive(bool isActive)
@@ -75,4 +91,5 @@ public class GameHUDView : BaseView, IGameHUDView
             HealthItems.Add(item);
         }
     }
+
 }

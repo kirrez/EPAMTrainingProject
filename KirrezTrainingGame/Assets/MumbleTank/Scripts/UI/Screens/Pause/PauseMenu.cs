@@ -1,8 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
 
 public class PauseMenu : IPauseMenu
 {
+    public event Action Resuming = () => { };
+    public event Action Restarting = () => { };
+    public event Action Backing = () => { };
+
     private IPauseMenuView _view;
 
     public PauseMenu()
@@ -21,29 +25,25 @@ public class PauseMenu : IPauseMenu
     public void Show()
     {
         _view.Show();
-        Time.timeScale = 0f;
     }
 
     public void Hide()
     {
         _view.Hide();
-        Time.timeScale = 1f;
     }
 
     private void OnResumeClicked()
     {
-        Hide();
+        Resuming.Invoke();
     }
 
     private void OnRestartClicked()
     {
-        var sceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName);
-
+        Restarting.Invoke();
     }
 
     private void OnBackClicked()
     {
-        SceneManager.LoadScene(Scenes.Menu.ToString());
+        Backing.Invoke();
     }
 }

@@ -54,10 +54,11 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
     protected Transform _target;
     protected Rigidbody _rigidbody;
     
-    private GameObject _deathExplosionPrefab = null;
     protected EnemyProperties _unitData;
 
     protected Vector3 _startPosition;
+
+    protected GameObject _deathExplosion = null;
 
     private int _score = 0;
     private float _moveSpeed = 8f;
@@ -66,7 +67,7 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
 
     private float _activationRadius = float.MaxValue;
 
-    protected virtual void Awake()
+    private void Awake()
     {
         var player = ServiceLocator.GetPlayer();
 
@@ -169,9 +170,9 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
 
     public void ShowDieEffect()
     {
-        if (_deathExplosionPrefab != null)
+        if (_deathExplosion != null)
         {
-            var explosion = Instantiate(_deathExplosionPrefab);
+            var explosion = Instantiate(_deathExplosion);
             explosion.transform.position = transform.position;
             Destroy(explosion, 1f);
         }
@@ -191,5 +192,11 @@ public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
     public void Enable()
     {
         gameObject.SetActive(true);
+        SetupUnitData();
+    }
+
+    public void DiscardTarget()
+    {
+        _target = null;
     }
 }

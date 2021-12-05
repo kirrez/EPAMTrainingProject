@@ -40,6 +40,21 @@ public class GameHUD : IGameHUD
         _view.SetShieldActive(isActive);
     }
 
+    public void SetTaskDescription(string description)
+    {
+        _view.SetTaskDescription(description);
+    }
+
+    public void SetTaskDescription(string description, int current, int maximum)
+    {
+        _view.SetTaskDescription(description, current, maximum);
+    }
+
+    public void SetTaskDescription(string description, float value)
+    {
+        _view.SetTaskDescription(description, value);
+    }
+
     public void Show()
     {
         _view.Show();

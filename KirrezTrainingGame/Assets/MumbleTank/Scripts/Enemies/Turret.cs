@@ -17,6 +17,11 @@ public class Turret : BaseEnemy
     private float _preparingTime = 0f;
     private float _maxPreparingTime = 2.5f;
 
+    private void OnEnable()
+    {
+        _currentState = States.Idle;
+    }
+
     private void FixedUpdate()
     {
         if (_currentState == States.Idle && ActivationRangeReached(1f))
@@ -66,4 +71,5 @@ public class Turret : BaseEnemy
         transform.LookAt(_target);
         _weapon.Shoot(FirePoint);
     }
+
 }

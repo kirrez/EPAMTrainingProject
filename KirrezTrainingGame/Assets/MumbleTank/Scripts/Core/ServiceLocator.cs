@@ -5,14 +5,16 @@ public class ServiceLocator : MonoBehaviour
     private static IGame Game;
     private static IPlayer Player;
     private static IUIRoot UIRoot;
+    private static IGameHUD GameHUD;
     private static IGameCamera GameCamera;
-    private static GameObject LightContainer;
     private static IUnitRepository UnitRepository;
     private static GameObject EventSystemContainer;
 
+    private static IGameSettings GameSettings;
     private static IPlayerSettings PlayerSettings;
     private static IResourceManager ResourceManager;
-    
+    private static ILocalizationManager LocalizationManager;
+
 
     public static IGame GetGame()
     {
@@ -74,6 +76,15 @@ public class ServiceLocator : MonoBehaviour
         return UnitRepository;
     }
 
+    public static IGameHUD GetGameHUD()
+    {
+        if (GameHUD == null)
+        {
+            GameHUD = new GameHUD();
+        }
+        return GameHUD;
+    }
+
     public static IPlayerSettings GetPlayerSettings()
     {
         if (PlayerSettings == null)
@@ -94,6 +105,24 @@ public class ServiceLocator : MonoBehaviour
         return ResourceManager;
     }
 
+    public static IGameSettings GetGameSettings()
+    {
+        if (GameSettings == null)
+        { 
+            GameSettings = new GameSettings();
+        }
+        return GameSettings;
+    }
+
+    public static ILocalizationManager GetLocalizationManager()
+    {
+        if (LocalizationManager == null)
+        {
+            LocalizationManager = new LocalizationManager();
+        }
+        return LocalizationManager;
+    }
+
     public static GameObject GetEventSystem()
     {
         if (EventSystemContainer == null)
@@ -105,24 +134,16 @@ public class ServiceLocator : MonoBehaviour
         return EventSystemContainer;
     }
 
-    public static GameObject GetLight()
-    {
-        if (LightContainer == null)
-        {
-            var resourceManager = GetResourceManager();
 
-            LightContainer = resourceManager.CreatePrefab<Components>(Components.LightContainer);
-        }
-        return LightContainer;
-    }
 
     private void OnDestroy()
     {
         Game = null;
         UIRoot = null;
         Player = null;
+        GameHUD = null;
         GameCamera = null;
-        LightContainer = null;
+
         UnitRepository = null;
         EventSystemContainer = null;
     }
