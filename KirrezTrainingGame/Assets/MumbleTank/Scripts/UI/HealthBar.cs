@@ -1,47 +1,50 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : BaseView, IHealthBar
+namespace TankGame
 {
-    private Slider slider;
-    private float _maxHealth;
-    private float _currentHealth;
-
-    private void Awake()
+    public class HealthBar : BaseView, IHealthBar
     {
-        slider = GetComponent<Slider>();
-    }
+        private Slider slider;
+        private float _maxHealth;
+        private float _currentHealth;
 
-    public void SetHealth(float health)
-    {
-        _currentHealth = health;
-
-        if (_currentHealth <= 0)
+        private void Awake()
         {
-            slider.value = 0f;
+            slider = GetComponent<Slider>();
         }
-        else
+
+        public void SetHealth(float health)
         {
+            _currentHealth = health;
+
+            if (_currentHealth <= 0)
+            {
+                slider.value = 0f;
+            }
+            else
+            {
+                slider.value = _currentHealth / _maxHealth;
+            }
+        }
+
+        public void ResetHealth()
+        {
+            _currentHealth = _maxHealth;
+            slider.value = 1f;
+        }
+
+        public void SetMaxHealth(float value)
+        {
+            if (value == 0f)
+            {
+                return;
+            }
+
+            _maxHealth = value;
             slider.value = _currentHealth / _maxHealth;
+
+            if (_currentHealth <= 0) slider.value = 0f;
         }
-    }
-
-    public void ResetHealth()
-    {
-        _currentHealth = _maxHealth;
-        slider.value = 1f;
-    }
-
-    public void SetMaxHealth(float value)
-    {
-        if (value == 0f)
-        {
-            return;
-        }
-
-        _maxHealth = value;
-        slider.value = _currentHealth / _maxHealth;
-
-        if (_currentHealth <= 0) slider.value = 0f;
     }
 }

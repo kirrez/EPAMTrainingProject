@@ -261,17 +261,49 @@ PrefabInstance:
       propertyPath: CanRespawn
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 561639074251274149, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 561639074251274149, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 561639074537549940, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
       propertyPath: CanRespawn
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 561639074537549940, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 561639074537549940, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 561639074560751320, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
       propertyPath: CanRespawn
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 561639074560751320, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 561639074560751320, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3861903047939232294, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
       propertyPath: CanRespawn
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3861903047939232294, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3861903047939232294, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3861903048076211584, guid: 7943e8daa3f6f8a498fb5fafdb6282bf, type: 3}
       propertyPath: m_RootOrder

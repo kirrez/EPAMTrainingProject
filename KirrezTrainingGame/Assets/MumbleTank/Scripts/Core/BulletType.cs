@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public enum BulletType
+namespace TankGame
 {
-    PvE_bullet,
-    EvP_bullet
+    public enum BulletType
+    {
+        PvE_bullet,
+        EvP_bullet
+    }
 }

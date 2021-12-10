@@ -1,150 +1,153 @@
 using UnityEngine;
 
-public class ServiceLocator : MonoBehaviour
+namespace TankGame
 {
-    private static IGame Game;
-    private static IPlayer Player;
-    private static IUIRoot UIRoot;
-    private static IGameHUD GameHUD;
-    private static IGameCamera GameCamera;
-    private static IUnitRepository UnitRepository;
-    private static GameObject EventSystemContainer;
-
-    private static IGameSettings GameSettings;
-    private static IPlayerSettings PlayerSettings;
-    private static IResourceManager ResourceManager;
-    private static ILocalizationManager LocalizationManager;
-
-
-    public static IGame GetGame()
+    public class ServiceLocator : MonoBehaviour
     {
-        if (Game == null)
+        private static IGame Game;
+        private static IPlayer Player;
+        private static IUIRoot UIRoot;
+        private static IGameHUD GameHUD;
+        private static IGameCamera GameCamera;
+        private static IUnitRepository UnitRepository;
+        private static GameObject EventSystemContainer;
+
+        private static IGameSettings GameSettings;
+        private static IPlayerSettings PlayerSettings;
+        private static IResourceManager ResourceManager;
+        private static ILocalizationManager LocalizationManager;
+
+
+        public static IGame GetGame()
         {
-            var resourceManager = GetResourceManager();
+            if (Game == null)
+            {
+                var resourceManager = GetResourceManager();
 
-            Game = resourceManager.CreatePrefab<IGame, Components>(Components.Game);
+                Game = resourceManager.CreatePrefab<IGame, Components>(Components.Game);
+            }
+            return Game;
         }
-        return Game;
-    }
 
-    public static IUIRoot GetUIRoot()
-    {
-        if (UIRoot == null)
+        public static IUIRoot GetUIRoot()
         {
-            var resourceManager = GetResourceManager();
+            if (UIRoot == null)
+            {
+                var resourceManager = GetResourceManager();
 
-            UIRoot = resourceManager.CreatePrefab<IUIRoot, Components>(Components.UIRoot);
+                UIRoot = resourceManager.CreatePrefab<IUIRoot, Components>(Components.UIRoot);
+            }
+
+            return UIRoot;
         }
 
-        return UIRoot;
-    }
 
-
-    public static IGameCamera GetGameCamera()
-    {
-        if (GameCamera == null)
+        public static IGameCamera GetGameCamera()
         {
-            var resourceManager = GetResourceManager();
+            if (GameCamera == null)
+            {
+                var resourceManager = GetResourceManager();
 
-            GameCamera = resourceManager.CreatePrefab<IGameCamera, Components>(Components.GameCamera);
+                GameCamera = resourceManager.CreatePrefab<IGameCamera, Components>(Components.GameCamera);
+            }
+
+            return GameCamera;
         }
 
-        return GameCamera;
-    }
-
-    public static IPlayer GetPlayer()
-    {
-        if (Player == null)
+        public static IPlayer GetPlayer()
         {
-            var resourceManager = GetResourceManager();
+            if (Player == null)
+            {
+                var resourceManager = GetResourceManager();
 
-            Player = resourceManager.CreatePrefab<IPlayer, Components>(Components.Player);
+                Player = resourceManager.CreatePrefab<IPlayer, Components>(Components.Player);
+            }
+
+            return Player;
         }
 
-        return Player;
-    }
-
-    public static IUnitRepository GetUnitRepository()
-    {
-        if (UnitRepository == null)
+        public static IUnitRepository GetUnitRepository()
         {
-            var resourceManager = GetResourceManager();
+            if (UnitRepository == null)
+            {
+                var resourceManager = GetResourceManager();
 
-            UnitRepository = resourceManager.CreatePrefab<IUnitRepository, Components>(Components.UnitRepository);
+                UnitRepository = resourceManager.CreatePrefab<IUnitRepository, Components>(Components.UnitRepository);
+            }
+
+            return UnitRepository;
         }
 
-        return UnitRepository;
-    }
-
-    public static IGameHUD GetGameHUD()
-    {
-        if (GameHUD == null)
+        public static IGameHUD GetGameHUD()
         {
-            GameHUD = new GameHUD();
+            if (GameHUD == null)
+            {
+                GameHUD = new GameHUD();
+            }
+            return GameHUD;
         }
-        return GameHUD;
-    }
 
-    public static IPlayerSettings GetPlayerSettings()
-    {
-        if (PlayerSettings == null)
+        public static IPlayerSettings GetPlayerSettings()
         {
-            PlayerSettings = new PlayerSettings();
+            if (PlayerSettings == null)
+            {
+                PlayerSettings = new PlayerSettings();
+            }
+
+            return PlayerSettings;
         }
 
-        return PlayerSettings;
-    }
-
-    public static IResourceManager GetResourceManager()
-    {
-        if (ResourceManager == null)
+        public static IResourceManager GetResourceManager()
         {
-            ResourceManager = new ResourceManager();
+            if (ResourceManager == null)
+            {
+                ResourceManager = new ResourceManager();
+            }
+
+            return ResourceManager;
         }
 
-        return ResourceManager;
-    }
-
-    public static IGameSettings GetGameSettings()
-    {
-        if (GameSettings == null)
-        { 
-            GameSettings = new GameSettings();
-        }
-        return GameSettings;
-    }
-
-    public static ILocalizationManager GetLocalizationManager()
-    {
-        if (LocalizationManager == null)
+        public static IGameSettings GetGameSettings()
         {
-            LocalizationManager = new LocalizationManager();
+            if (GameSettings == null)
+            {
+                GameSettings = new GameSettings();
+            }
+            return GameSettings;
         }
-        return LocalizationManager;
-    }
 
-    public static GameObject GetEventSystem()
-    {
-        if (EventSystemContainer == null)
+        public static ILocalizationManager GetLocalizationManager()
         {
-            var resourceManager = GetResourceManager();
-
-            EventSystemContainer = resourceManager.CreatePrefab<Components>(Components.EventSystemContainer);
+            if (LocalizationManager == null)
+            {
+                LocalizationManager = new LocalizationManager();
+            }
+            return LocalizationManager;
         }
-        return EventSystemContainer;
-    }
+
+        public static GameObject GetEventSystem()
+        {
+            if (EventSystemContainer == null)
+            {
+                var resourceManager = GetResourceManager();
+
+                EventSystemContainer = resourceManager.CreatePrefab<Components>(Components.EventSystemContainer);
+            }
+            return EventSystemContainer;
+        }
 
 
 
-    private void OnDestroy()
-    {
-        Game = null;
-        UIRoot = null;
-        Player = null;
-        GameHUD = null;
-        GameCamera = null;
+        private void OnDestroy()
+        {
+            Game = null;
+            UIRoot = null;
+            Player = null;
+            GameHUD = null;
+            GameCamera = null;
 
-        UnitRepository = null;
-        EventSystemContainer = null;
+            UnitRepository = null;
+            EventSystemContainer = null;
+        }
     }
 }

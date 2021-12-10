@@ -1,8 +1,11 @@
 using System;
 
-public interface IMainMenuView : IView
+namespace TankGame
 {
-    event Action StartGameClicked;
-    event Action OptionsClicked;
-    event Action QuitClicked;
+    public interface IMainMenuView : IView
+    {
+        event Action StartGameClicked;
+        event Action OptionsClicked;
+        event Action QuitClicked;
+    }
 }

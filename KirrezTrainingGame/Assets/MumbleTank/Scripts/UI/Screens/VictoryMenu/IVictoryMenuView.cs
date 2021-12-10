@@ -1,6 +1,9 @@
 using System;
 
-public interface IVictoryMenuView : IView
+namespace TankGame
 {
-    event Action NextLevelClicked;
+    public interface IVictoryMenuView : IView
+    {
+        event Action NextLevelClicked;
+    }
 }

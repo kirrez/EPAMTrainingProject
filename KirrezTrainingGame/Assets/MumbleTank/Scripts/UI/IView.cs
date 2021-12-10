@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public interface IView
+namespace TankGame
 {
-    void Show();
-    void Hide();
+    public interface IView
+    {
+        void Show();
+        void Hide();
 
-    void SetParent(Transform parent);
-    void SetPosition(Vector2 position);
+        void SetParent(Transform parent);
+        void SetPosition(Vector2 position);
+    }
 }

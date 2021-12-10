@@ -1,6 +1,10 @@
-public interface IGameHUD : IScreen
+
+namespace TankGame
 {
-    void SetTaskDescription(string description);
-    void SetTaskDescription(string description, float value);
-    void SetTaskDescription(string description, int current, int maximum);
+    public interface IGameHUD : IScreen
+    {
+        void SetTaskDescription(string description);
+        void SetTaskDescription(string description, float value);
+        void SetTaskDescription(string description, int current, int maximum);
+    }
 }

@@ -1,202 +1,191 @@
 using System;
 using UnityEngine;
 
-public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
+namespace TankGame
 {
-    public event Action<IEnemy> Died;
-    public event Action<float> HealthChanged;
-    public event Action<float> MaxHealthChanged;
-
-    public float MaxHealth
+    public abstract class BaseEnemy : MonoBehaviour, IHealth, IEnemy
     {
-        get
+        public event Action<IEnemy> Died = enemy => { };
+        public event Action<float> HealthChanged = value => { };
+        public event Action<float> MaxHealthChanged = value => { };
+
+        public float MaxHealth
         {
-            return _maxHitPoints;
-        }
-    }
-
-    public float CurrentHealth
-    {
-        get
-        {
-            return _currentHitPoints;
-        }
-    }
-
-    public Vector3 Position
-    {
-        get
-        {
-            return transform.position;
-        }
-        set
-        {
-            transform.position = value;
-        }
-    }
-
-    public Quaternion Rotation
-    {
-        get
-        {
-            return transform.rotation;
-        }
-        set
-        {
-            transform.rotation = value;
-        }
-    }
-
-    public EnemyType Type { get; set; }
-
-    protected Weapon _weapon;
-
-    protected Transform _target;
-    protected Rigidbody _rigidbody;
-    
-    protected EnemyProperties _unitData;
-
-    protected Vector3 _startPosition;
-
-    protected GameObject _deathExplosion = null;
-
-    private int _score = 0;
-    private float _moveSpeed = 8f;
-    private float _maxHitPoints = 0f;
-    private float _currentHitPoints = 0f;
-
-    private float _activationRadius = float.MaxValue;
-
-    private void Awake()
-    {
-        var player = ServiceLocator.GetPlayer();
-
-        _target = player.GetTransform();
-        _unitData = GetComponent<EnemyProperties>();
-        _rigidbody = GetComponent<Rigidbody>();
-
-        SetupUnitData();
-
-        if (_unitData.weaponPrefab != null)
-        {
-            _weapon = Instantiate(_unitData.weaponPrefab, transform.position, transform.rotation);
-        }
-    }
-
-    private void OnEnable()
-    {
-        SetupUnitData();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "PlayerTank")
-        {
-            var player = collision.gameObject.GetComponentInParent<Player>();
-            player.ReceiveDamage();
-
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        _currentHitPoints = 0f;
-
-        ShowDieEffect();
-
-        HealthChanged?.Invoke(_currentHitPoints);
-        Died?.Invoke(this);
-    }
-
-    // some enemies falls from sky on your head, another jumps from below your feet
-    public static float CorrectYPosition(EnemyType type)
-    {
-        float newY = 0f;
-        switch (type)
-        {
-            case EnemyType.Spikedmine:
-                newY = 10f;
-                break;
-            case EnemyType.Turret:
-                newY = -4f;
-                break;
-            case EnemyType.Flyer:
-                newY = 2f;
-                break;
-        }
-        return newY;
-    }
-
-    protected virtual void SetupUnitData()
-    {
-        Type = _unitData.type;
-
-        _score = _unitData.score;
-        _maxHitPoints = _unitData.hitPoints;
-        _currentHitPoints = _maxHitPoints;
-        _moveSpeed = _unitData.moveSpeed;
-
-        MaxHealthChanged?.Invoke(_maxHitPoints);
-        HealthChanged?.Invoke(_currentHitPoints);
-
-        _activationRadius = _unitData.activationRadius;
-    }
-
-    protected bool ActivationRangeReached(float k)
-    {
-        if (_target == null)
-        {
-            return false;
+            get
+            {
+                return _maxHitPoints;
+            }
         }
 
-        var distance = transform.position - _target.position;
-
-        if (distance.magnitude <= _activationRadius * k) return true;
-        else return false;
-    }
-
-    public void ReceiveDamage(float damage)
-    {
-        _currentHitPoints -= damage;
-
-        HealthChanged?.Invoke(_currentHitPoints);
-
-        if (_currentHitPoints < 0)
+        public float CurrentHealth
         {
-            Die();
+            get
+            {
+                return _currentHitPoints;
+            }
         }
-    }
 
-    public void ShowDieEffect()
-    {
-        if (_deathExplosion != null)
+        public Vector3 Position
         {
-            var explosion = Instantiate(_deathExplosion);
+            get
+            {
+                return transform.position;
+            }
+            set
+            {
+                transform.position = value;
+            }
+        }
+
+        public Quaternion Rotation
+        {
+            get
+            {
+                return transform.rotation;
+            }
+            set
+            {
+                transform.rotation = value;
+            }
+        }
+
+        public EnemyType Type { get; set; }
+
+        protected Weapon _weapon;
+        protected Transform _target;
+        protected Rigidbody _rigidbody;
+        protected Vector3 _startPosition;
+
+        private IResourceManager _resourceManager;
+        protected EnemyProperties _unitData;
+
+        private int _score = 0;
+        private float _moveSpeed = 8f;
+        private float _maxHitPoints = 0f;
+        private float _currentHitPoints = 0f;
+
+        private float _activationRadius = float.MaxValue;
+
+        private IUnitRepository _unitRepository;
+
+        private void Awake()
+        {
+            var player = ServiceLocator.GetPlayer();
+            _unitRepository = ServiceLocator.GetUnitRepository();
+            _resourceManager = ServiceLocator.GetResourceManager();
+
+            _target = player.GetTransform();
+            _unitData = GetComponent<EnemyProperties>();
+            _rigidbody = GetComponent<Rigidbody>();
+
+            SetupUnitData();
+
+            if (_unitData.weaponPrefab != null)
+            {
+                _weapon = Instantiate(_unitData.weaponPrefab, transform.position, transform.rotation);
+            }
+        }
+
+        protected virtual void OnEnable()
+        {
+            _unitRepository.Register(this);
+            SetupUnitData();
+        }
+
+        private void OnDisable()
+        {
+            _unitRepository.Unregister(this);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "PlayerTank")
+            {
+                var player = collision.gameObject.GetComponentInParent<Player>();
+                player.ReceiveDamage();
+
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            _currentHitPoints = 0f;
+
+            ShowDieEffect();
+
+            HealthChanged.Invoke(_currentHitPoints);
+            Died.Invoke(this);
+        }
+
+        protected virtual void SetupUnitData()
+        {
+            Type = _unitData.type;
+
+            _score = _unitData.score;
+            _maxHitPoints = _unitData.hitPoints;
+            _currentHitPoints = _maxHitPoints;
+            _moveSpeed = _unitData.moveSpeed;
+
+            MaxHealthChanged.Invoke(_maxHitPoints);
+            HealthChanged.Invoke(_currentHitPoints);
+
+            _activationRadius = _unitData.activationRadius;
+        }
+
+        protected bool ActivationRangeReached(float k)
+        {
+            if (_target == null)
+            {
+                return false;
+            }
+
+            var distance = transform.position - _target.position;
+
+            if (distance.magnitude <= _activationRadius * k) return true;
+            else return false;
+        }
+
+        public void ReceiveDamage(float damage)
+        {
+            _currentHitPoints -= damage;
+
+            HealthChanged.Invoke(_currentHitPoints);
+
+            if (_currentHitPoints < 0)
+            {
+                Die();
+            }
+        }
+
+        public void ShowDieEffect()
+        {
+            var explosion = _resourceManager.CreatePrefab<Effects>(Effects.Explosion);
             explosion.transform.position = transform.position;
             Destroy(explosion, 1f);
+
+            gameObject.SetActive(false);
         }
-        gameObject.SetActive(false);
-    }
 
-    public int GetScore()
-    {
-        return _score;
-    }
+        public int GetScore()
+        {
+            return _score;
+        }
 
-    public bool IsEnabled()
-    {
-        return gameObject.activeSelf;
-    }
+        public bool IsEnabled()
+        {
+            return gameObject.activeSelf;
+        }
 
-    public void Enable()
-    {
-        gameObject.SetActive(true);
-        SetupUnitData();
-    }
+        public void Enable()
+        {
+            gameObject.SetActive(true);
+            SetupUnitData();
+        }
 
-    public void DiscardTarget()
-    {
-        _target = null;
+        public void DiscardTarget()
+        {
+            _target = null;
+        }
     }
 }

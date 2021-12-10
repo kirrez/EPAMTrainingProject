@@ -1,56 +1,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlinkingEffect : MonoBehaviour
+namespace TankGame
 {
-    public Color BlinkingColor;
-    public float BlinkingFrequency = 0.2f;
-
-    private bool _isBlinking;
-    private List<BlinkingItem> _items = new List<BlinkingItem>();
-
-    private void Update()
+    public class BlinkingEffect : MonoBehaviour
     {
-        if (_isBlinking == false)
-        {
-            return;
-        }
+        public Color BlinkingColor;
+        public float BlinkingFrequency = 0.2f;
 
-        var phase = (int)(Time.time / BlinkingFrequency) % 2;
+        private bool _isBlinking;
+        private List<BlinkingItem> _items = new List<BlinkingItem>();
 
-        if (phase == 0)
+        private void Update()
         {
-            foreach (var item in _items)
+            if (_isBlinking == false)
             {
-                item.SetColor(BlinkingColor);
+                return;
+            }
+
+            var phase = (int)(Time.time / BlinkingFrequency) % 2;
+
+            if (phase == 0)
+            {
+                foreach (var item in _items)
+                {
+                    item.SetColor(BlinkingColor);
+                }
+            }
+            else
+            {
+                foreach (var item in _items)
+                {
+                    item.RevertColor();
+                }
             }
         }
-        else
+
+        public void RegisterItem(BlinkingItem item)
         {
+            _items.Add(item);
+        }
+
+        public void StartBlinking()
+        {
+            _isBlinking = true;
+        }
+
+        public void StopBlinking()
+        {
+            _isBlinking = false;
+
             foreach (var item in _items)
             {
                 item.RevertColor();
             }
-        }
-    }
-
-    public void RegisterItem(BlinkingItem item)
-    {
-        _items.Add(item);
-    }
-
-    public void StartBlinking()
-    {
-        _isBlinking = true;
-    }
-
-    public void StopBlinking()
-    {
-        _isBlinking = false;
-
-        foreach (var item in _items)
-        {
-            item.RevertColor();
         }
     }
 }

@@ -2,37 +2,38 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VictoryMenu : IVictoryMenu
+namespace TankGame
 {
-    public event Action Proceeding = () => { };
-
-    private IVictoryMenuView _view;
-
-    public VictoryMenu()
+    public class VictoryMenu : IVictoryMenu
     {
-        var uiRoot = ServiceLocator.GetUIRoot();
-        var resourceManager = ServiceLocator.GetResourceManager();
+        public event Action Proceeding = () => { };
 
-        _view = resourceManager.CreatePrefab<IVictoryMenuView, Views>(Views.Victory);
-        _view.SetParent(uiRoot.MenuCanvas);
+        private IVictoryMenuView _view;
 
-        _view.NextLevelClicked += OnNextLevelClicked;
+        public VictoryMenu()
+        {
+            var uiRoot = ServiceLocator.GetUIRoot();
+            var resourceManager = ServiceLocator.GetResourceManager();
+
+            _view = resourceManager.CreatePrefab<IVictoryMenuView, Views>(Views.Victory);
+            _view.SetParent(uiRoot.MenuCanvas);
+
+            _view.NextLevelClicked += OnNextLevelClicked;
+        }
+
+        private void OnNextLevelClicked()
+        {
+            Proceeding.Invoke();
+        }
+
+        public void Show()
+        {
+            _view.Show();
+        }
+
+        public void Hide()
+        {
+            _view.Hide();
+        }
     }
-
-    private void OnNextLevelClicked()
-    {
-        Proceeding.Invoke();
-        Hide();
-    }
-
-    public void Show()
-    {
-        _view.Show();
-    }
-
-    public void Hide()
-    {
-        _view.Hide();
-    }
-
 }

@@ -48,5 +48,7 @@ MonoBehaviour:
   lifetime: 2
   bulletDamage: 50
   bulletAmount: 5
-  bulletPrefab: {fileID: 8805482756003435667, guid: f9539753ec7fbd4499ee0b52a816eaf0, type: 3}
+  maxClipSize: 10
+  shotsInClip: 10
+  shell: 2
   piercingAmount: 1

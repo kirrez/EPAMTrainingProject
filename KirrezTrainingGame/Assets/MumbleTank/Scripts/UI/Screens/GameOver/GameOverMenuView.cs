@@ -1,35 +1,38 @@
 using System;
 using UnityEngine.UI;
 
-public class GameOverMenuView : BaseView, IGameOverMenuView
+namespace TankGame
 {
-    public event Action RestartClicked = () => { };
-    public event Action BackClicked = () => { };
-    public event Action QuitClicked = () => { };
-
-    public Button RestartButton;
-    public Button BackButton;
-    public Button QuitButton;
-
-    private void Awake()
+    public class GameOverMenuView : BaseView, IGameOverMenuView
     {
-        RestartButton.onClick.AddListener(OnRestartClick);
-        BackButton.onClick.AddListener(OnBackClick);
-        QuitButton.onClick.AddListener(OnQuitClick);
-    }
+        public event Action RestartClicked = () => { };
+        public event Action BackClicked = () => { };
+        public event Action QuitClicked = () => { };
 
-    public void OnRestartClick()
-    {
-        RestartClicked();
-    }
+        public Button RestartButton;
+        public Button BackButton;
+        public Button QuitButton;
 
-    public void OnBackClick()
-    {
-        BackClicked();
-    }
+        private void Awake()
+        {
+            RestartButton.onClick.AddListener(OnRestartClick);
+            BackButton.onClick.AddListener(OnBackClick);
+            QuitButton.onClick.AddListener(OnQuitClick);
+        }
 
-    public void OnQuitClick()
-    {
-        QuitClicked();
+        public void OnRestartClick()
+        {
+            RestartClicked();
+        }
+
+        public void OnBackClick()
+        {
+            BackClicked();
+        }
+
+        public void OnQuitClick()
+        {
+            QuitClicked();
+        }
     }
 }

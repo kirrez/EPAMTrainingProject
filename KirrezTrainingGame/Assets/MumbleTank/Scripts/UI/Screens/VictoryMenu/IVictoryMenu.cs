@@ -1,6 +1,9 @@
 using System;
 
-public interface IVictoryMenu : IScreen
+namespace TankGame
 {
-    event Action Proceeding;
+    public interface IVictoryMenu : IScreen
+    {
+        event Action Proceeding;
+    }
 }

@@ -1,12 +1,10 @@
 using System;
 
-public interface IGameUI
+namespace TankGame
 {
-    //event Action ResumeClicked;
-    //event Action RestartClicked;
-    //event Action BackToTitleClicked;
-    //event Action QuitClicked;
-
-    void ShowGameOverScreen();
-    void ShowVictoryScreen();
+    public interface IGameUI
+    {
+        void ShowGameOverScreen();
+        void ShowVictoryScreen();
+    }
 }

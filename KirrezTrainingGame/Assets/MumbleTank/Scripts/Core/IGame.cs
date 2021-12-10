@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 
-public interface IGame
+namespace TankGame
 {
-    void Win();
-    void Lose();
+    public interface IGame
+    {
+        void Win();
+        void Lose();
+    }
 }

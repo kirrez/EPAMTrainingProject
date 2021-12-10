@@ -1,10 +1,13 @@
 using System;
 
-public interface IOptionsMenuView : IView
+namespace TankGame
 {
-    event Action AddLivesClicked;
-    event Action DecreaseLivesClicked;
-    event Action BackClicked;
+    public interface IOptionsMenuView : IView
+    {
+        event Action AddLivesClicked;
+        event Action DecreaseLivesClicked;
+        event Action BackClicked;
 
-    void SetHealth(int value);
+        void SetHealth(int value);
+    }
 }

@@ -3,33 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitRepository : MonoBehaviour, IUnitRepository
+namespace TankGame
 {
-    public event Action<IEnemy> Killed = enemy => { };
-
-    private List<IEnemy> _enemiesList = new List<IEnemy>();
-
-    private void Awake()
+    public class UnitRepository : MonoBehaviour, IUnitRepository
     {
+        public event Action<IEnemy> Killed = enemy => { };
 
-    }
+        private List<IEnemy> _enemiesList = new List<IEnemy>();
 
-    public void Register(IEnemy enemy)
-    {
-        _enemiesList.Add(enemy);
-    }
-
-    public void Unregister(IEnemy enemy)
-    {
-        _enemiesList.Remove(enemy);
-        Killed.Invoke(enemy);
-    }
-
-    public void StopChasingPlayer()
-    {
-        foreach( IEnemy enemy in _enemiesList)
+        private void OnEnemyDied(IEnemy enemy)
         {
-            enemy.DiscardTarget();
+            enemy.Died -= OnEnemyDied;
+            Killed(enemy);
+        }
+
+        public void Register(IEnemy enemy)
+        {
+            _enemiesList.Add(enemy);
+            enemy.Died += OnEnemyDied;
+        }
+
+        public void Unregister(IEnemy enemy)
+        {
+            _enemiesList.Remove(enemy);
+        }
+
+        public void StopChasingPlayer()
+        {
+            foreach (IEnemy enemy in _enemiesList)
+            {
+                enemy.DiscardTarget();
+            }
         }
     }
 }

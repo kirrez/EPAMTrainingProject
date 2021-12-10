@@ -1,5 +1,9 @@
-public interface IHealthItem : IView
+
+namespace TankGame
 {
-    void Fill();
-    void Empty();
+    public interface IHealthItem : IView
+    {
+        void Fill();
+        void Empty();
+    }
 }

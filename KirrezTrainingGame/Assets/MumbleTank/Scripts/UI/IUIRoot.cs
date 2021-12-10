@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public interface IUIRoot
+namespace TankGame
 {
-    Transform OverlayCanvas { get; }
-    Transform MainCanvas { get; }
-    Transform MenuCanvas { get; }
+    public interface IUIRoot
+    {
+        Transform OverlayCanvas { get; }
+        Transform MainCanvas { get; }
+        Transform MenuCanvas { get; }
+    }
 }

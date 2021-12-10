@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public interface IGameCamera
+namespace TankGame
 {
-    Vector3 Position { get; }
+    public interface IGameCamera
+    {
+        Vector3 Position { get; }
 
-    void SetTarget(Transform target);
-    Ray ScreenPointToRay(Vector2 position);
-    Vector3 WorldToViewportPoint(Vector3 position);
+        void SetTarget(Transform target);
+        Ray ScreenPointToRay(Vector2 position);
+        Vector3 WorldToViewportPoint(Vector3 position);
+    }
 }

@@ -1,9 +1,11 @@
 using System;
 
-
-public interface IGameOverMenuView : IView
+namespace TankGame
 {
-    event Action RestartClicked;
-    event Action BackClicked;
-    event Action QuitClicked;
+    public interface IGameOverMenuView : IView
+    {
+        event Action RestartClicked;
+        event Action BackClicked;
+        event Action QuitClicked;
+    }
 }

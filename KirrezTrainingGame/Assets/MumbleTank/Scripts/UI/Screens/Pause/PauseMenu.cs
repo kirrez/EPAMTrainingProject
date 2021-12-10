@@ -1,49 +1,52 @@
 using UnityEngine;
 using System;
 
-public class PauseMenu : IPauseMenu
+namespace TankGame
 {
-    public event Action Resuming = () => { };
-    public event Action Restarting = () => { };
-    public event Action Backing = () => { };
-
-    private IPauseMenuView _view;
-
-    public PauseMenu()
+    public class PauseMenu : IPauseMenu
     {
-        var uiRoot = ServiceLocator.GetUIRoot();
-        var resourceManager = ServiceLocator.GetResourceManager();
+        public event Action Resuming = () => { };
+        public event Action Restarting = () => { };
+        public event Action Backing = () => { };
 
-        _view = resourceManager.CreatePrefab<IPauseMenuView, Views>(Views.Pause);
-        _view.SetParent(uiRoot.MenuCanvas);
+        private IPauseMenuView _view;
 
-        _view.ResumeClicked += OnResumeClicked;
-        _view.RestartClicked += OnRestartClicked;
-        _view.BackClicked += OnBackClicked;
-    }
+        public PauseMenu()
+        {
+            var uiRoot = ServiceLocator.GetUIRoot();
+            var resourceManager = ServiceLocator.GetResourceManager();
 
-    public void Show()
-    {
-        _view.Show();
-    }
+            _view = resourceManager.CreatePrefab<IPauseMenuView, Views>(Views.Pause);
+            _view.SetParent(uiRoot.MenuCanvas);
 
-    public void Hide()
-    {
-        _view.Hide();
-    }
+            _view.ResumeClicked += OnResumeClicked;
+            _view.RestartClicked += OnRestartClicked;
+            _view.BackClicked += OnBackClicked;
+        }
 
-    private void OnResumeClicked()
-    {
-        Resuming.Invoke();
-    }
+        public void Show()
+        {
+            _view.Show();
+        }
 
-    private void OnRestartClicked()
-    {
-        Restarting.Invoke();
-    }
+        public void Hide()
+        {
+            _view.Hide();
+        }
 
-    private void OnBackClicked()
-    {
-        Backing.Invoke();
+        private void OnResumeClicked()
+        {
+            Resuming.Invoke();
+        }
+
+        private void OnRestartClicked()
+        {
+            Restarting.Invoke();
+        }
+
+        private void OnBackClicked()
+        {
+            Backing.Invoke();
+        }
     }
 }

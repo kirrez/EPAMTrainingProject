@@ -1,10 +1,14 @@
-public enum Views
+
+namespace TankGame
 {
-    MainMenu,
-    OptionsMenu,
-    Pause,
-    GameOver,
-    Victory,
-    GameHUD,
-    AnimatedBackground
+    public enum Views
+    {
+        MainMenu,
+        OptionsMenu,
+        Pause,
+        GameOver,
+        Victory,
+        GameHUD,
+        AnimatedBackground
+    }
 }

@@ -1,5 +1,7 @@
-public enum EnemyComponents
+namespace TankGame
 {
-    SimpleExplosion,
-    HitEnemySparcle
+    public enum Effects
+    {
+        Explosion
+    }
 }

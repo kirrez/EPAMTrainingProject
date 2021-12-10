@@ -1,59 +1,62 @@
 using System;
 using UnityEngine;
 
-public class OptionsMenu : IOptionsMenu
+namespace TankGame
 {
-    public event Action BackClicked = () => { };
-
-    private IOptionsMenuView _view;
-    private IPlayerSettings _playerSettings;
-
-    public OptionsMenu()
+    public class OptionsMenu : IOptionsMenu
     {
-        var uiRoot = ServiceLocator.GetUIRoot();
-        var resourceManager = ServiceLocator.GetResourceManager();
-        _playerSettings = ServiceLocator.GetPlayerSettings();
+        public event Action BackClicked = () => { };
 
-        _view = resourceManager.CreatePrefab<IOptionsMenuView, Views>(Views.OptionsMenu);
-        _view.SetParent(uiRoot.MenuCanvas);
+        private IOptionsMenuView _view;
+        private IPlayerSettings _playerSettings;
 
-        _view.BackClicked += OnBackClicked;
-        _view.AddLivesClicked += OnAddLivesClicked;
-        _view.DecreaseLivesClicked += OnDecreaseLivesClicked;
+        public OptionsMenu()
+        {
+            var uiRoot = ServiceLocator.GetUIRoot();
+            var resourceManager = ServiceLocator.GetResourceManager();
+            _playerSettings = ServiceLocator.GetPlayerSettings();
 
-        _view.SetHealth(_playerSettings.StartHealth);
-    }
+            _view = resourceManager.CreatePrefab<IOptionsMenuView, Views>(Views.OptionsMenu);
+            _view.SetParent(uiRoot.MenuCanvas);
 
-    private void OnBackClicked()
-    {
-        BackClicked();
-    }
+            _view.BackClicked += OnBackClicked;
+            _view.AddLivesClicked += OnAddLivesClicked;
+            _view.DecreaseLivesClicked += OnDecreaseLivesClicked;
 
-    private void OnDecreaseLivesClicked()
-    {
-        var health = _playerSettings.StartHealth - 1;
-        health = Mathf.Clamp(health, _playerSettings.MinHealth, _playerSettings.MaxHealth);
+            _view.SetHealth(_playerSettings.StartHealth);
+        }
 
-        _playerSettings.StartHealth = health;
-        _view.SetHealth(health);
-    }
+        private void OnBackClicked()
+        {
+            BackClicked();
+        }
 
-    private void OnAddLivesClicked()
-    {
-        var health = _playerSettings.StartHealth + 1;
-        health = Mathf.Clamp(health, _playerSettings.MinHealth, _playerSettings.MaxHealth);
+        private void OnDecreaseLivesClicked()
+        {
+            var health = _playerSettings.StartHealth - 1;
+            health = Mathf.Clamp(health, _playerSettings.MinHealth, _playerSettings.MaxHealth);
 
-        _playerSettings.StartHealth = health;
-        _view.SetHealth(health);
-    }
+            _playerSettings.StartHealth = health;
+            _view.SetHealth(health);
+        }
 
-    public void Show()
-    {
-        _view.Show();
-    }
+        private void OnAddLivesClicked()
+        {
+            var health = _playerSettings.StartHealth + 1;
+            health = Mathf.Clamp(health, _playerSettings.MinHealth, _playerSettings.MaxHealth);
 
-    public void Hide()
-    {
-        _view.Hide();
+            _playerSettings.StartHealth = health;
+            _view.SetHealth(health);
+        }
+
+        public void Show()
+        {
+            _view.Show();
+        }
+
+        public void Hide()
+        {
+            _view.Hide();
+        }
     }
 }

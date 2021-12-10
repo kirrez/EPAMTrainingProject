@@ -1,10 +1,13 @@
 using System;
 
-public interface IUnitRepository
+namespace TankGame
 {
-    event Action<IEnemy> Killed;
+    public interface IUnitRepository
+    {
+        event Action<IEnemy> Killed;
 
-    void Register(IEnemy value);
-    void Unregister(IEnemy value);
-    void StopChasingPlayer();
+        void Register(IEnemy value);
+        void Unregister(IEnemy value);
+        void StopChasingPlayer();
+    }
 }

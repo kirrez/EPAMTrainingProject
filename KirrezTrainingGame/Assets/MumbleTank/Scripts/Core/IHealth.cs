@@ -1,10 +1,13 @@
 using System;
 
-public interface IHealth
+namespace TankGame
 {
-    event Action<float> HealthChanged;
-    event Action<float> MaxHealthChanged;
+    public interface IHealth
+    {
+        event Action<float> HealthChanged;
+        event Action<float> MaxHealthChanged;
 
-    float MaxHealth { get; }
-    float CurrentHealth { get; }
+        float MaxHealth { get; }
+        float CurrentHealth { get; }
+    }
 }

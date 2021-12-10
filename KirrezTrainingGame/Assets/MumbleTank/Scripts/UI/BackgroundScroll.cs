@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundScroll : MonoBehaviour
+namespace TankGame
 {
-    public float scrollSpeed;
-    public float tileSizeX;
-
-    private Vector3 _startPosition;
-
-    private void Start()
+    public class BackgroundScroll : MonoBehaviour
     {
-        _startPosition = transform.position;
-    }
+        public float scrollSpeed;
+        public float tileSizeX;
+
+        private Vector3 _startPosition;
+
+        private void Start()
+        {
+            _startPosition = transform.position;
+        }
 
 
-    private void Update()
-    {
-        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeX);
-        transform.position = _startPosition - Vector3.right * newPosition;
+        private void Update()
+        {
+            float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeX);
+            transform.position = _startPosition - Vector3.right * newPosition;
+        }
     }
 }

@@ -1,4 +1,10 @@
-public interface IGameSettings
+
+namespace TankGame
 {
-    Levels CurrentLevel { get; set; }
+    public interface IGameSettings
+    {
+        Levels CurrentLevel { get; set; }
+
+        float GetStartPositionY(EnemyType type);
+    }
 }

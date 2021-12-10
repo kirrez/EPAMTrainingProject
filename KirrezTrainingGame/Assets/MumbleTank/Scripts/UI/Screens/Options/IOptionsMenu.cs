@@ -1,6 +1,9 @@
 using System;
 
-public interface IOptionsMenu : IScreen
+namespace TankGame
 {
-    event Action BackClicked;
+    public interface IOptionsMenu : IScreen
+    {
+        event Action BackClicked;
+    }
 }

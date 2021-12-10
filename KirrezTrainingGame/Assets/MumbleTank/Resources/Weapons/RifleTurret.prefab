@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3640028893083654110}
-  - component: {fileID: 5510831075705327019}
+  - component: {fileID: 3493093905723027916}
   m_Layer: 0
-  m_Name: FastRifle
+  m_Name: RifleTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5510831075705327019
+--- !u!114 &3493093905723027916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,14 +40,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 66029573384851630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323a8800593673247ae68e24c592ca73, type: 3}
+  m_Script: {fileID: 11500000, guid: d32420b7935709646a14beed6c703c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingCooldown: 1.5
-  bulletSpeed: 13.5
-  lifetime: 1.4
-  bulletDamage: 10
-  bulletAmount: 1
+  shootingCooldown: 0.5
+  bulletSpeed: 17
+  lifetime: 2
+  bulletDamage: 1
+  bulletAmount: 5
   maxClipSize: 10
-  shotsInClip: -1
-  bulletPrefab: {fileID: 2909293314174339968, guid: 8aa6f1a82674fe54ebcc814ade96a3b3, type: 3}
+  shotsInClip: 10
+  shell: 3

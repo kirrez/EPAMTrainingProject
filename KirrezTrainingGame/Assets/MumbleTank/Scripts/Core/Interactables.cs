@@ -1,4 +1,8 @@
-public enum Interactables
+
+namespace TankGame
 {
-    HelicopterSite
+    public enum Interactables
+    {
+        HelicopterSite
+    }
 }

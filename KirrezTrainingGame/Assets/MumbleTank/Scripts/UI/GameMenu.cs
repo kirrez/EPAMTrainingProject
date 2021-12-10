@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMenu : MonoBehaviour
+namespace TankGame
 {
-    private IPauseMenu _pauseMenu;
-
-    private void Awake()
+    public class GameMenu : MonoBehaviour
     {
-        _pauseMenu = new PauseMenu();
-    }
+        private IPauseMenu _pauseMenu;
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        private void Awake()
         {
-            _pauseMenu.Show();
+            _pauseMenu = new PauseMenu();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                _pauseMenu.Show();
+            }
         }
     }
 }

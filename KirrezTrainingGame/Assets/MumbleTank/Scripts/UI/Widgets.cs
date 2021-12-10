@@ -1,6 +1,10 @@
-public enum Widgets
+
+namespace TankGame
 {
-    HealthItem,
-    HealthBar,
-    KillTaskView
+    public enum Widgets
+    {
+        HealthItem,
+        HealthBar,
+        KillTaskView
+    }
 }

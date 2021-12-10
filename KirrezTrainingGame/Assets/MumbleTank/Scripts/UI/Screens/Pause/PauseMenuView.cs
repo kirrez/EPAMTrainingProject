@@ -3,35 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class PauseMenuView : BaseView, IPauseMenuView
+namespace TankGame
 {
-    public event Action ResumeClicked = () => { };
-    public event Action RestartClicked = () => { };
-    public event Action BackClicked = () => { };
-
-    public Button ResumeButton;
-    public Button RestartButton;
-    public Button BackButton;
-
-    private void Awake()
+    public class PauseMenuView : BaseView, IPauseMenuView
     {
-        ResumeButton.onClick.AddListener(OnResumeClick);
-        RestartButton.onClick.AddListener(OnRestartClick);
-        BackButton.onClick.AddListener(OnBackClick);
-    }
+        public event Action ResumeClicked = () => { };
+        public event Action RestartClicked = () => { };
+        public event Action BackClicked = () => { };
 
-    public void OnResumeClick()
-    {
-        ResumeClicked();
-    }
+        public Button ResumeButton;
+        public Button RestartButton;
+        public Button BackButton;
 
-    public void OnRestartClick()
-    {
-        RestartClicked();
-    }
+        private void Awake()
+        {
+            ResumeButton.onClick.AddListener(OnResumeClick);
+            RestartButton.onClick.AddListener(OnRestartClick);
+            BackButton.onClick.AddListener(OnBackClick);
+        }
 
-    public void OnBackClick()
-    {
-        BackClicked();
+        public void OnResumeClick()
+        {
+            ResumeClicked();
+        }
+
+        public void OnRestartClick()
+        {
+            RestartClicked();
+        }
+
+        public void OnBackClick()
+        {
+            BackClicked();
+        }
     }
 }

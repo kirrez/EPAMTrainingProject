@@ -1,35 +1,38 @@
 using System;
 using UnityEngine.UI;
 
-public class MainMenuView : BaseView, IMainMenuView
+namespace TankGame
 {
-    public event Action StartGameClicked = () => { };
-    public event Action OptionsClicked = () => { };
-    public event Action QuitClicked = () => { };
-
-    public Button StartGameButton;
-    public Button OptionsButton;
-    public Button QuitButton;
-
-    private void Awake()
+    public class MainMenuView : BaseView, IMainMenuView
     {
-        StartGameButton.onClick.AddListener(OnStartGameClick);
-        OptionsButton.onClick.AddListener(OnOptionsClick);
-        QuitButton.onClick.AddListener(OnQuitClick);
-    }
+        public event Action StartGameClicked = () => { };
+        public event Action OptionsClicked = () => { };
+        public event Action QuitClicked = () => { };
 
-    public void OnStartGameClick()
-    {
-        StartGameClicked();
-    }
+        public Button StartGameButton;
+        public Button OptionsButton;
+        public Button QuitButton;
 
-    public void OnOptionsClick()
-    {
-        OptionsClicked();
-    }
+        private void Awake()
+        {
+            StartGameButton.onClick.AddListener(OnStartGameClick);
+            OptionsButton.onClick.AddListener(OnOptionsClick);
+            QuitButton.onClick.AddListener(OnQuitClick);
+        }
 
-    public void OnQuitClick()
-    {
-        QuitClicked();
+        public void OnStartGameClick()
+        {
+            StartGameClicked();
+        }
+
+        public void OnOptionsClick()
+        {
+            OptionsClicked();
+        }
+
+        public void OnQuitClick()
+        {
+            QuitClicked();
+        }
     }
 }

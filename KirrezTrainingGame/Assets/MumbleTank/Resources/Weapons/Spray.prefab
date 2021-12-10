@@ -50,5 +50,5 @@ MonoBehaviour:
   bulletAmount: 9
   maxClipSize: 10
   shotsInClip: 15
-  bulletPrefab: {fileID: 2909293314174339968, guid: 867e1be674afcc14098c22b6c4e982d1, type: 3}
+  shell: 1
   Angle: 15

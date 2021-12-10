@@ -2,94 +2,96 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameHUDView : BaseView, IGameHUDView
+namespace TankGame
 {
-    public Image TankNormalIcon;
-    public Image TankDamagedIcon;
-    public Image ShieldProgress;
-    public Text TaskDescription;
-
-    public Transform HealthContent;
-    private List<IHealthItem> HealthItems = new List<IHealthItem>();
-
-    private IResourceManager _resourceManager;
-
-    private void Awake()
+    public class GameHUDView : BaseView, IGameHUDView
     {
-        _resourceManager = ServiceLocator.GetResourceManager();
-    }
+        public Image TankNormalIcon;
+        public Image TankDamagedIcon;
+        public Image ShieldProgress;
+        public Text TaskDescription;
 
-    public void SetTaskDescription(string description)
-    {
-        TaskDescription.text = description;
-    }
+        public Transform HealthContent;
+        private List<IHealthItem> HealthItems = new List<IHealthItem>();
 
-    public void SetTaskDescription(string description, float value)
-    {
-        var output = string.Format(description, value);
-        TaskDescription.text = output;
-    }
+        private IResourceManager _resourceManager;
 
-    public void SetTaskDescription(string description, int current, int maximum)
-    {
-        var output = string.Format(description, current, maximum);
-        TaskDescription.text = output;
-    }
-
-    public void SetShieldActive(bool isActive)
-    {
-        ShieldProgress.fillAmount = 0f;
-        TankDamagedIcon.gameObject.SetActive(isActive);
-    }
-
-    public void SetShieldProgress(float normalizedValue)
-    {
-        ShieldProgress.fillAmount = normalizedValue;
-    }
-
-    public void SetHealth(int value)
-    {
-        for (int i = 0; i < HealthItems.Count; i++)
+        private void Awake()
         {
-            var item = HealthItems[i];
+            _resourceManager = ServiceLocator.GetResourceManager();
+        }
 
-            if (value > i)
+        public void SetTaskDescription(string description)
+        {
+            TaskDescription.text = description;
+        }
+
+        public void SetTaskDescription(string description, float value)
+        {
+            var output = string.Format(description, value);
+            TaskDescription.text = output;
+        }
+
+        public void SetTaskDescription(string description, int current, int maximum)
+        {
+            var output = string.Format(description, current, maximum);
+            TaskDescription.text = output;
+        }
+
+        public void SetShieldActive(bool isActive)
+        {
+            ShieldProgress.fillAmount = 0f;
+            TankDamagedIcon.gameObject.SetActive(isActive);
+        }
+
+        public void SetShieldProgress(float normalizedValue)
+        {
+            ShieldProgress.fillAmount = normalizedValue;
+        }
+
+        public void SetHealth(int value)
+        {
+            for (int i = 0; i < HealthItems.Count; i++)
             {
+                var item = HealthItems[i];
+
+                if (value > i)
+                {
+                    item.Fill();
+                }
+                else
+                {
+                    item.Empty();
+                }
+            }
+        }
+
+        public void SetMaxHealth(int value)
+        {
+            foreach (var item in HealthItems)
+            {
+                item.Hide();
+            }
+
+            for (int i = 0; i < value; i++)
+            {
+                IHealthItem item;
+
+                if (HealthItems.Count > i)
+                {
+                    item = HealthItems[i];
+                }
+                else
+                {
+                    item = _resourceManager.CreatePrefab<IHealthItem, Widgets>(Widgets.HealthItem);
+                    item.SetParent(HealthContent);
+                }
+
+                item.Show();
                 item.Fill();
-            }
-            else
-            {
-                item.Empty();
+
+                HealthItems.Add(item);
             }
         }
     }
-
-    public void SetMaxHealth(int value)
-    {
-        foreach (var item in HealthItems)
-        {
-            item.Hide();
-        }
-
-        for (int i = 0; i < value; i++)
-        {
-            IHealthItem item;
-
-            if (HealthItems.Count > i)
-            {
-                item = HealthItems[i];
-            }
-            else
-            {
-                item = _resourceManager.CreatePrefab<IHealthItem, Widgets>(Widgets.HealthItem);
-                item.SetParent(HealthContent);
-            }
-
-            item.Show();
-            item.Fill();
-
-            HealthItems.Add(item);
-        }
-    }
-
 }

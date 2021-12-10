@@ -191,6 +191,14 @@ PrefabInstance:
       propertyPath: MaxEnemies
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3626360456204716962, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626360456204716962, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3626360456204716963, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
       propertyPath: m_Name
       value: EnemySpawnerMine
@@ -274,8 +282,16 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3626360456204716962, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626360456204716962, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
       propertyPath: SpawnPeriod
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626360456204716962, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3626360456204716963, guid: 6bf18332ef8c707499c41a0c3aedcbb7, type: 3}
       propertyPath: m_Name

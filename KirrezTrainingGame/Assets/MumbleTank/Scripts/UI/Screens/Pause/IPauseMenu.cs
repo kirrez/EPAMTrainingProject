@@ -1,8 +1,11 @@
 using System;
 
-public interface IPauseMenu : IScreen
+namespace TankGame
 {
-    event Action Resuming;
-    event Action Restarting;
-    event Action Backing;
+    public interface IPauseMenu : IScreen
+    {
+        event Action Resuming;
+        event Action Restarting;
+        event Action Backing;
+    }
 }

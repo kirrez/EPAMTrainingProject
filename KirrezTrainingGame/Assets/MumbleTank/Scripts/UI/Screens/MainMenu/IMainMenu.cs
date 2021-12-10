@@ -1,4 +1,8 @@
-public interface IMainMenu : IScreen
-{
 
+namespace TankGame
+{
+    public interface IMainMenu : IScreen
+    {
+
+    }
 }

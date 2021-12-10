@@ -2,73 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponSpray : Weapon
+namespace TankGame
 {
-    public float Angle = 25f;
-
-    public void ResetBullet()
+    public class WeaponSpray : Weapon
     {
-        BulletStatus[BulletIndex] = 0;
-        Bullets[BulletIndex].SetActive(false);
-    }
+        public float Angle = 25f;
 
-    public override void Shoot(Transform firePoint)
-    {
-        Rigidbody rBody;
-        Vector3 direction;
+        //public void ResetBullet()
+        //{
+        //    BulletStatus[BulletIndex] = 0;
+        //    Bullets[BulletIndex].SetActive(false);
+        //}
 
-        if (CurrentCooldown <= 0)
+        public override void Shoot(Transform firePoint)
         {
-            if ((ShotsLeft == 0) && (CurrentClipSize == 0)) return;
-            if ((ShotsLeft == 0) && (CurrentClipSize > 0))
+            Rigidbody rBody;
+            Vector3 direction;
+
+            if (CurrentCooldown <= 0)
             {
-                // it's an instant reloading ))
-                CurrentClipSize--;
-                ShotsLeft = shotsInClip;
-            }
-            if (ShotsLeft > 0)
-            {
-                // first bullet
-                ResetBullet();
-                BulletStatus[BulletIndex] = 1;
-                Bullets[BulletIndex].SetActive(true);
+                if ((ShotsLeft == 0) && (CurrentClipSize == 0)) return;
+                if ((ShotsLeft == 0) && (CurrentClipSize > 0))
+                {
+                    // it's an instant reloading ))
+                    CurrentClipSize--;
+                    ShotsLeft = shotsInClip;
+                }
+                if (ShotsLeft > 0)
+                {
+                    // first bullet
+                    //ResetBullet();
+                    //BulletStatus[BulletIndex] = 1;
+                    //Bullets[BulletIndex].SetActive(true);
+                    var bullet1 = _resourceManager.GetFromPool(shell);
 
-                rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
-                rBody.transform.position = firePoint.position;
-                rBody.transform.rotation = firePoint.rotation * Quaternion.AngleAxis(-Angle, Vector3.up);
-                direction = firePoint.transform.forward;
-                direction = Quaternion.AngleAxis(-Angle, Vector3.up) * direction;
-                
-                rBody.velocity = direction * bulletSpeed;
-                UpdateIndex();
+                    rBody = bullet1.GetComponent<Rigidbody>();
+                    rBody.transform.position = firePoint.position;
+                    rBody.transform.rotation = firePoint.rotation * Quaternion.AngleAxis(-Angle, Vector3.up);
+                    direction = firePoint.transform.forward;
+                    direction = Quaternion.AngleAxis(-Angle, Vector3.up) * direction;
 
-                //second bullet
-                ResetBullet();
-                BulletStatus[BulletIndex] = 1;
-                Bullets[BulletIndex].SetActive(true);
+                    rBody.velocity = direction * bulletSpeed;
+                    //UpdateIndex();
 
-                rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
-                rBody.transform.position = firePoint.position;
-                rBody.transform.rotation = firePoint.rotation;
-                rBody.velocity = rBody.transform.forward * bulletSpeed;
-                UpdateIndex();
+                    //second bullet
+                    //ResetBullet();
+                    //BulletStatus[BulletIndex] = 1;
+                    //Bullets[BulletIndex].SetActive(true);
+                    var bullet2 = _resourceManager.GetFromPool(shell);
 
-                //third bullet
-                ResetBullet();
-                BulletStatus[BulletIndex] = 1;
-                Bullets[BulletIndex].SetActive(true);
+                    rBody = bullet2.GetComponent<Rigidbody>();
+                    rBody.transform.position = firePoint.position;
+                    rBody.transform.rotation = firePoint.rotation;
+                    rBody.velocity = rBody.transform.forward * bulletSpeed;
+                    //UpdateIndex();
 
-                rBody = Bullets[BulletIndex].GetComponent<Rigidbody>();
-                rBody.transform.position = firePoint.position;
-                rBody.transform.rotation = firePoint.rotation * Quaternion.AngleAxis(Angle, Vector3.up);
-                direction = firePoint.transform.forward;
-                direction = Quaternion.AngleAxis(Angle, Vector3.up) * direction;
-                rBody.velocity = direction * bulletSpeed;
-                UpdateIndex();
-                //
-                CurrentCooldown = shootingCooldown;
+                    //third bullet
+                    //ResetBullet();
+                    //BulletStatus[BulletIndex] = 1;
+                    //Bullets[BulletIndex].SetActive(true);
+                    var bullet3 = _resourceManager.GetFromPool(shell);
 
-                ShotsLeft--;
+                    rBody = bullet3.GetComponent<Rigidbody>();
+                    rBody.transform.position = firePoint.position;
+                    rBody.transform.rotation = firePoint.rotation * Quaternion.AngleAxis(Angle, Vector3.up);
+                    direction = firePoint.transform.forward;
+                    direction = Quaternion.AngleAxis(Angle, Vector3.up) * direction;
+                    rBody.velocity = direction * bulletSpeed;
+                    //UpdateIndex();
+
+                    CurrentCooldown = shootingCooldown;
+
+                    ShotsLeft--;
+                }
             }
         }
     }

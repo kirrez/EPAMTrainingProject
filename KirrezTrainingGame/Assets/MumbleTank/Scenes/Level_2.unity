@@ -402,6 +402,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157985548806358552, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985548806358552, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985549292834997, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985549292834997, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985549329489152, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985549329489152, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985549928161205, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985549928161205, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985550008169287, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985550008169287, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985550725713393, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: IsUnlimited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 157985550725713393, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
+      propertyPath: MaxEnemiesOnScene
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3486398103180431362, guid: 1ebe35a145ac3c04c90cf7f3c4383c0e, type: 3}
       propertyPath: m_RootOrder
       value: 3

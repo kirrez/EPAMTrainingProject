@@ -1,75 +1,78 @@
 using UnityEngine;
 
-public class Turret : BaseEnemy
+namespace TankGame
 {
-    private States _currentState;
-
-    private enum States
+    public class Turret : BaseEnemy
     {
-        Idle,
-        Preparing,
-        Activated,
-        Deactivated
-    }
+        private States _currentState;
 
-    public Transform FirePoint;
-
-    private float _preparingTime = 0f;
-    private float _maxPreparingTime = 2.5f;
-
-    private void OnEnable()
-    {
-        _currentState = States.Idle;
-    }
-
-    private void FixedUpdate()
-    {
-        if (_currentState == States.Idle && ActivationRangeReached(1f))
+        private enum States
         {
-            _currentState = States.Preparing;
-            _preparingTime = _maxPreparingTime;
-            _startPosition = transform.position;
+            Idle,
+            Preparing,
+            Activated,
+            Deactivated
         }
 
-        if (_currentState == States.Preparing)
+        public Transform FirePoint;
+
+        private float _preparingTime = 0f;
+        private float _maxPreparingTime = 2.5f;
+
+        protected override void OnEnable()
         {
-            if (_preparingTime >= 0)
+            base.OnEnable();
+            _currentState = States.Idle;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_currentState == States.Idle && ActivationRangeReached(1f))
             {
-                _preparingTime -= Time.fixedDeltaTime;
-                var finishPosition = transform.position;
-                finishPosition.y = 6f;
-                transform.position = Vector3.Lerp(_startPosition, finishPosition, (1 - _preparingTime) / _maxPreparingTime);
+                _currentState = States.Preparing;
+                _preparingTime = _maxPreparingTime;
+                _startPosition = transform.position;
             }
-            else
+
+            if (_currentState == States.Preparing)
+            {
+                if (_preparingTime >= 0)
+                {
+                    _preparingTime -= Time.fixedDeltaTime;
+                    var finishPosition = transform.position;
+                    finishPosition.y = 6f;
+                    transform.position = Vector3.Lerp(_startPosition, finishPosition, (1 - _preparingTime) / _maxPreparingTime);
+                }
+                else
+                {
+                    _currentState = States.Activated;
+                }
+            }
+
+            if (_currentState == States.Deactivated && ActivationRangeReached(1f))
             {
                 _currentState = States.Activated;
             }
-        }
 
-        if (_currentState == States.Deactivated && ActivationRangeReached(1f))
-        {
-            _currentState = States.Activated;
-        }
-
-        if (_currentState == States.Activated)
-        {
-            Attack();
-            if (!ActivationRangeReached(3f))
+            if (_currentState == States.Activated)
             {
-                _currentState = States.Deactivated;
+                Attack();
+                if (!ActivationRangeReached(3f))
+                {
+                    _currentState = States.Deactivated;
+                }
             }
         }
-    }
 
-    private void Attack()
-    {
-        if (_target == null)
+        private void Attack()
         {
-            return;
+            if (_target == null)
+            {
+                return;
+            }
+
+            transform.LookAt(_target);
+            _weapon.Shoot(FirePoint);
         }
-
-        transform.LookAt(_target);
-        _weapon.Shoot(FirePoint);
     }
-
 }

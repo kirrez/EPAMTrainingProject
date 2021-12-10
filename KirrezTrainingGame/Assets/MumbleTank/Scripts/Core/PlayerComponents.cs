@@ -1,4 +1,8 @@
-public enum PlayerComponents
+
+namespace TankGame
 {
-    ExplodingTank
+    public enum PlayerComponents
+    {
+        ExplodingTank
+    }
 }

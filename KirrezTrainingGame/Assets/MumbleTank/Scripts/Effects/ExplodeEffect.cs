@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class ExplodeEffect : MonoBehaviour
+namespace TankGame
 {
-    public GameObject Mesh;
-
-    private IResourceManager _resourceManager;
-
-    private void Awake()
+    public class ExplodeEffect : MonoBehaviour
     {
-        _resourceManager = ServiceLocator.GetResourceManager();
-    }
+        public GameObject Mesh;
 
-    public void Explode()
-    {
-        Mesh.SetActive(false);
+        private IResourceManager _resourceManager;
 
-        var explodingTank = _resourceManager.CreatePrefab<Transform, PlayerComponents>(PlayerComponents.ExplodingTank);
-        explodingTank.position = transform.position;
-        explodingTank.rotation = transform.rotation;
+        private void Awake()
+        {
+            _resourceManager = ServiceLocator.GetResourceManager();
+        }
+
+        public void Explode()
+        {
+            Mesh.SetActive(false);
+
+            var explodingTank = _resourceManager.CreatePrefab<Transform, PlayerComponents>(PlayerComponents.ExplodingTank);
+            explodingTank.position = transform.position;
+            explodingTank.rotation = transform.rotation;
+        }
     }
 }

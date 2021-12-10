@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface ILocalizationManager
+namespace TankGame
 {
-    string GetText(LocalizationKeys key);
+    public interface ILocalizationManager
+    {
+        string GetText(LocalizationKeys key);
+    }
 }

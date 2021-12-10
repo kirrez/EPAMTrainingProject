@@ -1,8 +1,11 @@
 using System;
 
-public interface IGameOverMenu : IScreen
+namespace TankGame
 {
-    event Action Restarting;
-    event Action Backing;
-    event Action Quitting;
+    public interface IGameOverMenu : IScreen
+    {
+        event Action Restarting;
+        event Action Backing;
+        event Action Quitting;
+    }
 }

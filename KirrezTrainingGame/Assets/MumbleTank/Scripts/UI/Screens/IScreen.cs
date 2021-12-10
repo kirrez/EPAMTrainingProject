@@ -1,5 +1,9 @@
-public interface IScreen
+
+namespace TankGame
 {
-    void Show();
-    void Hide();
+    public interface IScreen
+    {
+        void Show();
+        void Hide();
+    }
 }

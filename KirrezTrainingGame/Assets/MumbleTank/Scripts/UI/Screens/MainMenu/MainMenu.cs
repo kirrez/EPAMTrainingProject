@@ -1,59 +1,62 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : IMainMenu
+namespace TankGame
 {
-    private IMainMenuView _view;
-    private IOptionsMenu _optionsMenu;
-
-    public MainMenu()
+    public class MainMenu : IMainMenu
     {
-        var uiRoot = ServiceLocator.GetUIRoot();
-        var eventSystem = ServiceLocator.GetEventSystem();
-        var resourceManager = ServiceLocator.GetResourceManager();
+        private IMainMenuView _view;
+        private IOptionsMenu _optionsMenu;
 
-        _view = resourceManager.CreatePrefab<IMainMenuView, Views>(Views.MainMenu);
-        _view.SetParent(uiRoot.MenuCanvas);
+        public MainMenu()
+        {
+            var uiRoot = ServiceLocator.GetUIRoot();
+            var eventSystem = ServiceLocator.GetEventSystem();
+            var resourceManager = ServiceLocator.GetResourceManager();
 
-        _view.StartGameClicked += OnStartGameClicked;
-        _view.OptionsClicked += OnOptionsClicked;
-        _view.QuitClicked += OnQuitClicked;
+            _view = resourceManager.CreatePrefab<IMainMenuView, Views>(Views.MainMenu);
+            _view.SetParent(uiRoot.MenuCanvas);
 
-        _optionsMenu = new OptionsMenu();
-        _optionsMenu.Hide();
+            _view.StartGameClicked += OnStartGameClicked;
+            _view.OptionsClicked += OnOptionsClicked;
+            _view.QuitClicked += OnQuitClicked;
 
-        _optionsMenu.BackClicked += OnOptionsMenuBackClicked;
-    }
+            _optionsMenu = new OptionsMenu();
+            _optionsMenu.Hide();
 
-    private void OnOptionsMenuBackClicked()
-    {
-        _optionsMenu.Hide();
-        Show();
-    }
+            _optionsMenu.BackClicked += OnOptionsMenuBackClicked;
+        }
 
-    public void Show()
-    {
-        _view.Show();
-    }
+        private void OnOptionsMenuBackClicked()
+        {
+            _optionsMenu.Hide();
+            Show();
+        }
 
-    public void Hide()
-    {
-        _view.Hide();
-    }
+        public void Show()
+        {
+            _view.Show();
+        }
 
-    private void OnQuitClicked()
-    {
-        Application.Quit();
-    }
+        public void Hide()
+        {
+            _view.Hide();
+        }
 
-    private void OnOptionsClicked()
-    {
-        Hide();
-        _optionsMenu.Show();
-    }
+        private void OnQuitClicked()
+        {
+            Application.Quit();
+        }
 
-    private void OnStartGameClicked()
-    {
-        SceneManager.LoadScene(Levels.Level_1.ToString());
+        private void OnOptionsClicked()
+        {
+            Hide();
+            _optionsMenu.Show();
+        }
+
+        private void OnStartGameClicked()
+        {
+            SceneManager.LoadScene(Levels.Level_1.ToString());
+        }
     }
 }

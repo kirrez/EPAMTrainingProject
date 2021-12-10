@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelicopterSite : MonoBehaviour
+namespace TankGame
 {
-    public Action IsReached = () => { };
-
-    private void OnTriggerEnter(Collider other)
+    public class HelicopterSite : MonoBehaviour
     {
-        if (other.tag == "PlayerTank")
+        public Action IsReached = () => { };
+
+        private void OnTriggerEnter(Collider other)
         {
-            IsReached.Invoke();
+            if (other.tag == "PlayerTank")
+            {
+                IsReached.Invoke();
+            }
         }
     }
 }

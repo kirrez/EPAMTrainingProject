@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public enum EnemyType
+namespace TankGame
 {
-    Spikedmine,
-    Turret,
-    Flyer
+    public enum EnemyType
+    {
+        Spikedmine,
+        Turret,
+        Flyer
+    }
 }

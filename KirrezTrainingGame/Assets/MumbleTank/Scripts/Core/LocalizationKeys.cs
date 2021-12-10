@@ -1,8 +1,10 @@
 
-
-public enum LocalizationKeys
+namespace TankGame
 {
-    KillEnemies,
-    ReachDestination,
-    SurviveTime
+    public enum LocalizationKeys
+    {
+        KillEnemies,
+        ReachDestination,
+        SurviveTime
+    }
 }

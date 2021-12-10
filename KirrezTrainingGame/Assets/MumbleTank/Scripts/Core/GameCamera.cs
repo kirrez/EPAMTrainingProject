@@ -1,50 +1,53 @@
 using UnityEngine;
 
-public class GameCamera : MonoBehaviour, IGameCamera
+namespace TankGame
 {
-    public Vector3 positionOffset = new Vector3(0f, 30f, 0f);
-
-    private Transform _target;
-    private float _smooth = 5f;
-    private Camera _cameraComponent;
-
-    private void Awake()
+    public class GameCamera : MonoBehaviour, IGameCamera
     {
-        _cameraComponent = GetComponent<Camera>();
-    }
+        public Vector3 positionOffset = new Vector3(0f, 30f, 0f);
 
-    public Vector3 Position
-    {
-        get
+        private Transform _target;
+        private float _smooth = 5f;
+        private Camera _cameraComponent;
+
+        private void Awake()
         {
-            return transform.position;
+            _cameraComponent = GetComponent<Camera>();
         }
-    }
 
-    public Ray ScreenPointToRay(Vector2 position)
-    {
-        var ray = _cameraComponent.ScreenPointToRay(position);
-
-        return ray;
-    }
-
-    public void SetTarget(Transform target)
-    {
-        _target = target;
-    }
-
-    private void Update()
-    {
-        if (transform.position != _target.position + positionOffset)
+        public Vector3 Position
         {
-            transform.position = Vector3.Lerp(transform.position, _target.position + positionOffset, Time.deltaTime * _smooth);
+            get
+            {
+                return transform.position;
+            }
         }
-    }
 
-    public Vector3 WorldToViewportPoint(Vector3 position)
-    {
-        var point = _cameraComponent.WorldToViewportPoint(position);
+        public Ray ScreenPointToRay(Vector2 position)
+        {
+            var ray = _cameraComponent.ScreenPointToRay(position);
 
-        return point;
+            return ray;
+        }
+
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+        }
+
+        private void Update()
+        {
+            if (transform.position != _target.position + positionOffset)
+            {
+                transform.position = Vector3.Lerp(transform.position, _target.position + positionOffset, Time.deltaTime * _smooth);
+            }
+        }
+
+        public Vector3 WorldToViewportPoint(Vector3 position)
+        {
+            var point = _cameraComponent.WorldToViewportPoint(position);
+
+            return point;
+        }
     }
 }

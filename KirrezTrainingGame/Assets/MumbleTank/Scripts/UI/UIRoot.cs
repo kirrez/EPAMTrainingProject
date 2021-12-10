@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class UIRoot : MonoBehaviour, IUIRoot
+namespace TankGame
 {
-    public Transform OverlayCanvasLink;
-    public Transform MainCanvasLink;
-    public Transform MenuCanvasLink;
-
-    public Transform OverlayCanvas
+    public class UIRoot : MonoBehaviour, IUIRoot
     {
-        get
+        public Transform OverlayCanvasLink;
+        public Transform MainCanvasLink;
+        public Transform MenuCanvasLink;
+
+        public Transform OverlayCanvas
         {
-            return OverlayCanvasLink;
+            get
+            {
+                return OverlayCanvasLink;
+            }
         }
-    }
 
-    public Transform MainCanvas
-    {
-        get
+        public Transform MainCanvas
         {
-            return MainCanvasLink;
+            get
+            {
+                return MainCanvasLink;
+            }
         }
-    }
 
-    public Transform MenuCanvas
-    {
-        get
+        public Transform MenuCanvas
         {
-            return MenuCanvasLink;
+            get
+            {
+                return MenuCanvasLink;
+            }
         }
     }
 }

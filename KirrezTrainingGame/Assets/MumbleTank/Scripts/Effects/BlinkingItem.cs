@@ -1,26 +1,29 @@
 using UnityEngine;
 
-public class BlinkingItem : MonoBehaviour
+namespace TankGame
 {
-    private Renderer _renderer;
-    private Color _defaultColor;
-
-    private void Awake()
+    public class BlinkingItem : MonoBehaviour
     {
-        _renderer = GetComponent<Renderer>();
-        _defaultColor = _renderer.material.color;
+        private Renderer _renderer;
+        private Color _defaultColor;
 
-        var effect = GetComponentInParent<BlinkingEffect>();
-        effect.RegisterItem(this);
-    }
+        private void Awake()
+        {
+            _renderer = GetComponent<Renderer>();
+            _defaultColor = _renderer.material.color;
 
-    public void SetColor(Color color)
-    {
-        _renderer.material.color = color;
-    }
+            var effect = GetComponentInParent<BlinkingEffect>();
+            effect.RegisterItem(this);
+        }
 
-    public void RevertColor()
-    {
-        _renderer.material.color = _defaultColor;
+        public void SetColor(Color color)
+        {
+            _renderer.material.color = color;
+        }
+
+        public void RevertColor()
+        {
+            _renderer.material.color = _defaultColor;
+        }
     }
 }

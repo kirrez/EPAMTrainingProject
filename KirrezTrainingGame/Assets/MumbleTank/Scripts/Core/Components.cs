@@ -1,10 +1,14 @@
-public enum Components
+
+namespace TankGame
 {
-    Game,
-    Player,
-    UIRoot,
-    GameCamera,
-    UnitRepository,
-    LightContainer,
-    EventSystemContainer
+    public enum Components
+    {
+        Game,
+        Player,
+        UIRoot,
+        GameCamera,
+        UnitRepository,
+        LightContainer,
+        EventSystemContainer
+    }
 }

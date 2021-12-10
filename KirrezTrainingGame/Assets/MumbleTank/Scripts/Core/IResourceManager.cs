@@ -1,8 +1,12 @@
 using System;
 using UnityEngine;
 
-public interface IResourceManager
+namespace TankGame
 {
-    GameObject CreatePrefab<E>(E type) where E : Enum;
-    T CreatePrefab<T, E>(E type) where E : Enum;
+    public interface IResourceManager
+    {
+        GameObject GetFromPool<E>(E objType) where E : Enum;
+        GameObject CreatePrefab<E>(E type) where E : Enum;
+        T CreatePrefab<T, E>(E type) where E : Enum;
+    }
 }

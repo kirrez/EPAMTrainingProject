@@ -1,19 +1,22 @@
 using System;
 using UnityEngine.UI;
 
-public class VictoryMenuView : BaseView, IVictoryMenuView
+namespace TankGame
 {
-    public event Action NextLevelClicked = () => { };
-
-    public Button NextLevelButton;
-
-    private void Awake()
+    public class VictoryMenuView : BaseView, IVictoryMenuView
     {
-        NextLevelButton.onClick.AddListener(OnNextLevelClick);
-    }
+        public event Action NextLevelClicked = () => { };
 
-    public void OnNextLevelClick()
-    {
-        NextLevelClicked();
+        public Button NextLevelButton;
+
+        private void Awake()
+        {
+            NextLevelButton.onClick.AddListener(OnNextLevelClick);
+        }
+
+        public void OnNextLevelClick()
+        {
+            NextLevelClicked();
+        }
     }
 }
